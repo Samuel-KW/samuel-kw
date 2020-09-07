@@ -1,0 +1,59 @@
+/* Column container */
+.row {
+    display: -ms-flexbox;
+    -ms-flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Sidebar/left column */
+.side {
+    background-color: #f1f1f1;
+    color: #272a34;
+    -ms-flex: 20%;
+    flex: 20%;
+}
+
+/* Sidebar links */
+.side a {
+    flex-direction: column;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    padding: 20px;
+}
+
+/* Sidebar link hover*/
+.side a:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Main column */
+.main {
+    background-color: #ededed;
+    color: #272a34;
+    padding: 20px;
+    -ms-flex: 80%;
+    flex: 80%;
+}
+
+.main div {
+    white-space: pre-wrap;
+    margin-top: 10px;
+}
+
+/* Responsive layout when the screen is less than 700px wide */
+
+@media screen and (max-width: 700px) {
+    .row {
+        flex-direction: column;
+    }
+
+    .side {
+        justify-content: space-evenly;
+        position: sticky;
+        display: flex;
+        left: 0;
+        top: 0;
+    }
+}

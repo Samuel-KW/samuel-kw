@@ -1,0 +1,26 @@
+/* Basic styles for the heading */
+.header {
+    background: #6642f5;
+    text-align: center;
+    color: white;
+    padding: 80px;
+    font-size: 44px;
+    line-height: 50px;
+    color: #fff;
+}
+
+/* Give perspective to the animation */
+.header-animation {
+    perspective: 400px;
+}
+
+/* Increase the font size of the heading */
+.header h1 {
+    font-size: 40px;
+}
+
+/* Force divs to be inline */
+.header-animation > div {
+    display: inline-block;
+    position: relative;
+}
