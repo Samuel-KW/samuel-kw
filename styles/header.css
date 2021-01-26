@@ -2,11 +2,14 @@
 .header {
     background: #6642f5;
     text-align: center;
-    color: white;
-    padding: 80px;
-    font-size: 44px;
+    position: relative;
     line-height: 50px;
+    font-size: 44px;
+    padding: 80px;
     color: #fff;
+    height: 100%;
+    width: 100%;
+    
 }
 
 /* Give perspective to the animation */
@@ -23,4 +26,9 @@
 .header-animation > div {
     display: inline-block;
     position: relative;
+}
+
+.particles-js-canvas-el {
+    top: 0; left: 0;
+    position: absolute;
 }
