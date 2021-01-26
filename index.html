@@ -7,19 +7,21 @@
     
     <title>Samuel Walls | Home</title>
 
-    <link rel='stylesheet' type='text/css' media='screen' href='styles/style.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='styles/main.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='styles/keyframes.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='styles/reset.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='styles/header.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='styles/content.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='styles/footer.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='styles/main.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='styles/nav.css'>
 </head>
 <body>
     
     <div class="menu-bars" id="toggle-menu"><div></div><div></div><div></div></div>
 
-    <header class="header">
+    <header class="header" id="header">
+
+        <canvas class="particles-js-canvas-el"></canvas>
+
         <h1 class="header-animation">
             <div>
                 <div style="position:relative;display:inline-block;">S</div><div style="position:relative;display:inline-block;">a</div><div style="position:relative;display:inline-block;">m</div><div style="position:relative;display:inline-block;">u</div><div style="position:relative;display:inline-block;">e</div><div style="position:relative;display:inline-block;">l</div>
@@ -86,13 +88,13 @@
             <div>    Donec sit amet justo varius, venenatis est nec, euismod mauris. Aliquam erat volutpat. In ac massa quis quam pretium ultrices. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vitae massa vehicula, lobortis nisi ut, viverra mauris. Nunc ut laoreet justo, ut suscipit massa. Suspendisse rhoncus mauris mauris, ut iaculis dolor facilisis eget. Nam consequat posuere eros. Cras ac tristique nunc. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed sodales feugiat lobortis. Nullam dignissim auctor lorem, vel lacinia sapien hendrerit eget. Nulla suscipit mollis pretium. Nulla varius risus ex, sed rutrum nisi viverra et.</div>
         </div>
         
-
     </content>
 
     <footer class="footer">
         <div>© 2020, Samuel Walls.</div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/gsap.min.js"></script>
     <script src='scripts/index.js'></script>
 </body>
