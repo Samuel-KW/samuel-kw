@@ -13,29 +13,14 @@ document.getElementById('toggle-menu').addEventListener('click', function () {
 particlesJS('header', {
     "particles": {
       "number": {
-        "value": 80,
+        "value": 100,
         "density": {
           "enable": true,
-          "value_area": 710.2328774690454
+          "value_area": 500
         }
       },
       "color": {
         "value": "#ffffff"
-      },
-      "shape": {
-        "type": "circle",
-        "stroke": {
-          "width": 0,
-          "color": "#000000"
-        },
-        "polygon": {
-          "nb_sides": 5
-        },
-        "image": {
-          "src": "img/github.svg",
-          "width": 100,
-          "height": 100
-        }
       },
       "opacity": {
         "value": 0.5,
@@ -53,7 +38,7 @@ particlesJS('header', {
         "anim": {
           "enable": true,
           "speed": 3,
-          "size_min": 0.8120772123013452,
+          "size_min": 0.8,
           "sync": false
         }
       },
@@ -87,8 +72,8 @@ particlesJS('header', {
           "mode": "bubble"
         },
         "onclick": {
-          "enable": false,
-          "mode": "push"
+          "enable": true,
+          "mode": "repulse"
         },
         "resize": true
       },
@@ -101,14 +86,14 @@ particlesJS('header', {
         },
         "bubble": {
           "distance": 250,
-          "size": 4,
-          "duration": 5.034965034965035,
+          "size": 3,
+          "duration": 5,
           "opacity": 8,
           "speed": 3
         },
         "repulse": {
-          "distance": 200,
-          "duration": 0.4
+          "distance": 100,
+          "duration": 10
         },
         "push": {
           "particles_nb": 4
