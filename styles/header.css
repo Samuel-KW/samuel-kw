@@ -1,13 +1,16 @@
 /* Basic styles for the heading */
 .header {
-    background: #292929;
+    justify-content: center;
+    flex-direction: column;
+    background: #121212;
+    align-items: center;
     text-align: center;
-    position: relative;
     line-height: 50px;
     font-size: 44px;
     padding: 80px;
+    height: 100vh;
+    display: flex;
     color: #fff;
-    height: 100%;
     width: 100%;
     
 }
@@ -23,12 +26,22 @@
 }
 
 /* Force divs to be inline */
-.header-animation > div {
+.header-animation div {
+    margin-bottom: .1875566421em;
+    font-size: 1.999396em;
+    line-height: 1.1253398526;
     display: inline-block;
     position: relative;
 }
 
 .particles-js-canvas-el {
-    top: 0; left: 0;
+    pointer-events: none;
     position: absolute;
+    top: 0; left: 0;
+}
+
+.svgDrip {
+    position: absolute;
+    z-index: 101;
+    bottom: 0;
 }
