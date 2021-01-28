@@ -1074,6 +1074,9 @@ var pJS = function(tag_id, params) {
                         pos_y = e.offsetY || e.clientY;
                 }
 
+                pos_x += window.scrollX;
+                pos_y += window.scrollY;
+
                 pJS.interactivity.mouse.pos_x = pos_x;
                 pJS.interactivity.mouse.pos_y = pos_y;
 
