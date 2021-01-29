@@ -5,14 +5,10 @@
     background: #121212;
     align-items: center;
     text-align: center;
-    line-height: 50px;
-    font-size: 44px;
     padding: 80px;
     height: 100vh;
     display: flex;
-    color: #fff;
     width: 100%;
-    
 }
 
 /* Give perspective to the animation */
@@ -20,15 +16,9 @@
     perspective: 400px;
 }
 
-/* Increase the font size of the heading */
-.header h1 {
-    font-size: 40px;
-}
-
 /* Force divs to be inline */
 .header-animation div {
     margin-bottom: .1875566421em;
-    font-size: 1.999396em;
     line-height: 1.1253398526;
     display: inline-block;
     position: relative;
@@ -44,4 +34,27 @@
     position: absolute;
     z-index: 101;
     bottom: 0;
+}
+
+.header h1 {
+    line-height: 50px;
+    font-size: 15vw;
+    color: #fff;
+}
+
+@media (min-width: 550px) {
+    .header h1 {
+        font-size: 150px;
+    }
+}
+
+.header h2 {
+    font-size: 5vh;
+    color: #fff;
+}
+
+@media (min-width: 550px) {
+    .header h2 {
+        font-size: 50px;
+    }
 }
