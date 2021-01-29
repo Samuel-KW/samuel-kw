@@ -72,10 +72,10 @@ const loop = () => {
 
 
 let timeline = gsap.timeline(),
-    chars = document.querySelectorAll('.header-animation > div > div');
+    chars = document.querySelectorAll('.header-animation > div');
 
 
-timeline.from(chars, { duration: 0.5, opacity: 0, scale: 0, y: 80, rotationX: 180, transformOrigin: '0% 50% -50', ease: 'back', stagger: 0.1 });
+timeline.from(chars, { duration: 0.75, opacity: 0, scale: 0, y: 250, rotationX: 270, transformOrigin: 'center', ease: 'back' });
 timeline.call(loop);
 
 // Toggle menu
