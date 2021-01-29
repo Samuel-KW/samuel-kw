@@ -422,7 +422,9 @@ var pJS = function(tag_id, params) {
         switch (p.shape) {
 
             case 'circle':
-                pJS.canvas.ctx.arc(p.x, p.y, radius, 0, Math.PI * 2, false);
+
+                // Add parallax effect
+                pJS.canvas.ctx.arc(p.x + window.scrollX, p.y + window.scrollY, radius, 0, Math.PI * 2, false);
                 break;
 
             case 'edge':
@@ -785,8 +787,9 @@ var pJS = function(tag_id, params) {
         /* on hover event */
         if (pJS.interactivity.events.onhover.enable && isInArray('bubble', pJS.interactivity.events.onhover.mode)) {
 
-            var dx_mouse = p.x - pJS.interactivity.mouse.pos_x,
-                dy_mouse = p.y - pJS.interactivity.mouse.pos_y,
+            // SW - Take scrolling to account
+            var dx_mouse = p.x - pJS.interactivity.mouse.pos_x + window.scrollX,
+                dy_mouse = p.y - pJS.interactivity.mouse.pos_y + window.scrollY,
                 dist_mouse = Math.sqrt(dx_mouse * dx_mouse + dy_mouse * dy_mouse),
                 ratio = 1 - dist_mouse / pJS.interactivity.modes.bubble.distance;
 
