@@ -69,8 +69,6 @@ const loop = () => {
     
 };
 
-
-
 let timeline = gsap.timeline(),
     chars = document.querySelectorAll('.header-animation > div');
 
@@ -81,6 +79,23 @@ timeline.call(loop);
 // Toggle menu
 document.getElementById('toggle-menu').addEventListener('click', function() {
     this.classList.toggle('clicked');
+});
+
+
+const progress = document.getElementById('progress');
+
+window.addEventListener('scroll', e => {
+    let sY = window.scrollY,
+        height = document.body.scrollHeight - window.screen.availHeight,
+        val = 100 * (sY / height);
+
+    if (val < 101 && val > -1)
+        progress.setProgress(val);
+});
+
+window.addEventListener('mousemove', e => {
+    progress.style.top = (e.clientY - progress._size / 2) + 'px';
+    progress.style.left = (e.clientX - progress._size / 2) + 'px';
 });
 
 particlesJS('header', {
