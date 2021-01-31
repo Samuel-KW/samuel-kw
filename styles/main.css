@@ -26,3 +26,10 @@ html, body {
 ::-webkit-scrollbar-thumb:hover {
     background: rgb(66, 66, 66); 
 }
+
+#progress {
+    position: fixed;
+    z-index: 9999;
+    left: -100px;
+    top: -100px;
+}
