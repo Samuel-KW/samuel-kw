@@ -3,16 +3,21 @@
     "name": "Samuel Walls | Full Stack Developer",
     "icons": [
         {
-            "src": "/images/placeholder.jpg",
-            "type": "image/jpg",
-            "sizes": "1920x1080"
+            "src": "/favicon/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "favicon/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
         }
     ],
     "start_url": "/index/html?source=pwa",
     "background_color": "#1E1E1E",
+    "theme_color": "#191a21",
     "display": "standalone",
     "scope": "/",
-    "theme_color": "#191a21",
     "shortcuts": [
         {
             "name": "About Me",
