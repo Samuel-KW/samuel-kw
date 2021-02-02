@@ -1,0 +1,26 @@
+/* TEAM */
+
+    Full Stack Developer: Samuel Walls
+
+    Github: https://github.com/Samuel-UC
+
+    Location: California, United States
+
+
+
+/* THANKS */
+
+    Friends who encouraged me to express my creativity
+    through a slightly different style of art.
+
+
+
+/* SITE */
+
+    Last update: 2/1/2021
+
+    Standards: HTML5, CSS3, JavaScript
+
+    Components: Modified particles.js
+
+    Software: Visual Studio Code
