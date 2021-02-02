@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="500" viewBox="0 0 600 500">
+  <defs>
+    <linearGradient id="linear-gradient" x1="1.029" y1="-5.15" x2="0.256" y2="2.115" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#5209ff"/>
+      <stop offset="1" stop-color="#00dcff"/>
+    </linearGradient>
+    <clipPath id="clip-Web_1920_1">
+      <rect width="600" height="500"/>
+    </clipPath>
+  </defs>
+  <g id="Web_1920_1" data-name="Web 1920 – 1" clip-path="url(#clip-Web_1920_1)">
+    <g id="Logo" transform="translate(34 7.755)">
+      <g id="W" transform="translate(-191 -139)">
+        <rect id="Rectangle_3" data-name="Rectangle 3" width="350" height="52" transform="translate(465 215) rotate(90)" fill="url(#linear-gradient)"/>
+        <path id="Path_6" data-name="Path 6" d="M0,0,250.153-.169,197.97,52.015,0,52Z" transform="translate(589.665 446.726) rotate(135)" fill="url(#linear-gradient)"/>
+        <path id="Path_7" data-name="Path 7" d="M0,52.015l250.153.169L197.97,0,0,.015Z" transform="translate(586.899 375.946) rotate(45)" fill="url(#linear-gradient)"/>
+      </g>
+      <g id="S">
+        <path id="Path_5" data-name="Path 5" d="M0,0,231.822-.544,277,52H0Z" transform="translate(0 0.544)" fill="url(#linear-gradient)"/>
+        <rect id="Rectangle_2" data-name="Rectangle 2" width="148" height="52" transform="translate(52 0.544) rotate(90)" fill="url(#linear-gradient)"/>
+        <path id="Path_8" data-name="Path 8" d="M0,0H277L255.465,52.007l-203.441,0Z" transform="translate(195.869 344.49) rotate(-135)" fill="url(#linear-gradient)"/>
+      </g>
+    </g>
+  </g>
+</svg>
