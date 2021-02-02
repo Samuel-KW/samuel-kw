@@ -1,8 +1,12 @@
 /* Basic styles for the heading */
 .header {
+    background-image: url('../images/logo.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #121212;
+    background-size: 30vw;
     justify-content: center;
     flex-direction: column;
-    background: #121212;
     align-items: center;
     text-align: center;
     padding: 80px;
