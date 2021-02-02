@@ -3,7 +3,7 @@
     "name": "Samuel Walls | Full Stack Developer",
     "icons": [
         {
-            "src": "/favicon/android-chrome-192x192.png",
+            "src": "favicon/android-chrome-192x192.png",
             "sizes": "192x192",
             "type": "image/png"
         },
@@ -13,7 +13,7 @@
             "type": "image/png"
         }
     ],
-    "start_url": "/index/html?source=pwa",
+    "start_url": "index.html?source=pwa",
     "background_color": "#1E1E1E",
     "theme_color": "#191a21",
     "display": "standalone",
@@ -23,10 +23,10 @@
             "name": "About Me",
             "short_name": "About",
             "description": "View addition information",
-            "url": "/index.html?source=pwa#about-me",
+            "url": "index.html?source=pwa#about-me",
             "icons": [
                 {
-                    "src": "/images/logo.svg",
+                    "src": "images/logo.svg",
                     "sizes": "600x500"
                 }
             ]
@@ -35,7 +35,7 @@
     "description": "Samuel Walls | Full Stack Developer",
     "screenshots": [
         {
-            "src": "/images/placeholder.jpg",
+            "src": "images/placeholder.jpg",
             "type": "image/jpg",
             "sizes": "1920x1080"
         },
