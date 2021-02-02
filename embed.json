@@ -1,0 +1,16 @@
+{
+    "version": "1.0",
+    "type": "rich",
+
+    "title": "Placeholder Image",
+    "url": "images/placeholder.jpg",
+
+    "width": 1920,
+    "height": 1080,
+
+    "author_name": "Samuel Walls",
+    "author_url": "https://github.com/Samuel-UC",
+
+    "provider_name": "Github",
+    "provider_url": "https://github.com/"
+}
