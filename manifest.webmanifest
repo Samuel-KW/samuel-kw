@@ -1,0 +1,43 @@
+{
+    "short_name": "Samuel Walls",
+    "name": "Samuel Walls | Full Stack Developer",
+    "icons": [
+        {
+            "src": "/images/placeholder.jpg",
+            "type": "image/jpg",
+            "sizes": "1920x1080"
+        }
+    ],
+    "start_url": "/index/html?source=pwa",
+    "background_color": "#1E1E1E",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#191a21",
+    "shortcuts": [
+        {
+            "name": "About Me",
+            "short_name": "About",
+            "description": "View addition information",
+            "url": "/index.html?source=pwa#about-me",
+            "icons": [
+                {
+                    "src": "/images/logo.svg",
+                    "sizes": "600x500"
+                }
+            ]
+        }
+    ],
+    "description": "Samuel Walls | Full Stack Developer",
+    "screenshots": [
+        {
+            "src": "/images/placeholder.jpg",
+            "type": "image/jpg",
+            "sizes": "1920x1080"
+        },
+        {
+            "src": "/images/logo.svg",
+            "type": "image/svg",
+            "sizes": "600x500"
+        }
+    ]
+}
