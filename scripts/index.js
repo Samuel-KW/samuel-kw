@@ -63,10 +63,10 @@ const loop = () => {
 
     handle.clean()
         .then(() => {
-          handle.type(typing[index++], 50, 0.03)
-          .then(() => setTimeout(loop, 4000));
+            handle.type(typing[index++], 50, 0.03)
+                .then(() => setTimeout(loop, 4000));
         });
-    
+
 };
 
 let timeline = gsap.timeline(),
@@ -97,6 +97,20 @@ window.addEventListener('mousemove', e => {
     progress.style.top = (e.clientY - progress._size / 2) + 'px';
     progress.style.left = (e.clientX - progress._size / 2) + 'px';
 });
+
+// Register service worker
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+        navigator.serviceWorker.register('scripts/sw.js').then(function(registration) {
+
+            console.log('Registrated service worker: ', registration.scope);
+
+        }, function(err) {
+
+            console.log('Failed to register service worker: ', err);
+        });
+    });
+}
 
 particlesJS('header', {
     "particles": {
