@@ -43,7 +43,6 @@
 }
 
 /* Responsive layout when the screen is less than 700px wide */
-
 @media screen and (max-width: 700px) {
     .row {
         flex-direction: column;
@@ -52,8 +51,13 @@
     .side {
         justify-content: space-evenly;
         position: sticky;
+        font-size: 3vw;
         display: flex;
         left: 0;
         top: 0;
+    }
+
+    .side a {
+        padding: 5vw;
     }
 }
