@@ -85,6 +85,21 @@ window.addEventListener('scroll', e => {
     progress.style.width = Math.min(Math.max(val, 0), 100) + '%';
 });
 
+const svgAnimation = () => {
+
+    var d = 
+        "M" + point.p1.x + "," + point.p1.y + " " + cType +
+        point.c1.x + "," + point.c1.y + " " +
+        (point.c2 ? point.c2.x + "," + point.c2.y + " " : "") +
+        point.p2.x + "," + point.p2.y +
+        (fill ? " Z" : "");
+
+    line.curve.setAttributeNS(null, "d", d);
+
+    requestAnimationFrame(svgAnimation);
+};
+//svgAnimation();
+
 // Register service worker
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
