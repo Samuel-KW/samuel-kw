@@ -69,13 +69,6 @@ const loop = () => {
 
 };
 
-let timeline = gsap.timeline(),
-    chars = document.querySelectorAll('.header-animation > div');
-
-
-timeline.from(chars, { duration: 0.75, opacity: 0, scale: 0, y: 250, rotationX: 270, transformOrigin: 'center', ease: 'back' });
-timeline.call(loop);
-
 // Toggle menu
 document.getElementById('toggle-menu').addEventListener('click', function() {
     this.classList.toggle('clicked');
@@ -89,13 +82,7 @@ window.addEventListener('scroll', e => {
         height = document.body.scrollHeight - window.screen.availHeight,
         val = 100 * (sY / height);
 
-    if (val < 101 && val > -1)
-        progress.setProgress(val);
-});
-
-window.addEventListener('mousemove', e => {
-    progress.style.top = (e.clientY - progress._size / 2) + 'px';
-    progress.style.left = (e.clientX - progress._size / 2) + 'px';
+    progress.style.width = Math.min(Math.max(val, 0), 100) + '%';
 });
 
 // Register service worker
