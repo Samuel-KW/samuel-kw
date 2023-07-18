@@ -1534,3 +1534,82 @@ window.particlesJS.load = function(tag_id, path_config_json, callback) {
     xhr.send();
 
 };
+
+particlesJS('header', {
+    "particles": {
+        "number": {
+            "value": 100,
+            "density": {
+                "enable": true,
+                "value_area": 500
+            }
+        },
+        "color": {
+            "value": "#ffffff"
+        },
+        "opacity": {
+            "value": 0.5,
+            "random": false,
+            "anim": {
+                "enable": false,
+                "speed": 1,
+                "opacity_min": 0.1,
+                "sync": false
+            }
+        },
+        "size": {
+            "value": 3,
+            "random": true,
+            "anim": {
+                "enable": true,
+                "speed": 3,
+                "size_min": 0.8,
+                "sync": false
+            }
+        },
+        "line_linked": {
+            "enable": false,
+            "distance": 0,
+            "color": "#ffffff",
+            "opacity": 0.4,
+            "width": 1
+        },
+        "move": {
+            "enable": true,
+            "speed": 1,
+            "direction": "top",
+            "random": true,
+            "straight": true,
+            "out_mode": "out",
+            "bounce": false,
+            "attract": {
+                "enable": false,
+                "rotateX": 0,
+                "rotateY": 0
+            }
+        }
+    },
+    "interactivity": {
+        "detect_on": "window",
+        "events": {
+            "onhover": {
+                "enable": true,
+                "mode": "bubble"
+            },
+            "onclick": {
+                "enable": false
+            },
+            "resize": true
+        },
+        "modes": {
+            "bubble": {
+                "distance": 250,
+                "size": 3,
+                "duration": 5,
+                "opacity": 8,
+                "speed": 3
+            }
+        }
+    },
+    "retina_detect": true
+});
