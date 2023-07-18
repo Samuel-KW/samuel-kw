@@ -1,15 +1,15 @@
 /* Basic styles for the heading */
 .header {
-    background-image: url('../images/logo.svg');
+    /* background-image: url('../images/logo.svg');
     background-position: center;
     background-repeat: no-repeat;
     background-color: #121212;
-    background-size: 30vw;
+    background-size: 30vw; */
     justify-content: center;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
     padding: 80px;
     height: 100vh;
     display: flex;
@@ -29,17 +29,6 @@
     position: relative;
 }
 
-.particles-js-canvas-el {
-    pointer-events: none;
-    position: absolute;
-    top: 0; left: 0;
-}
-
-.svgDrip {
-    position: absolute;
-    z-index: 101;
-    bottom: 0;
-}
 
 .header h1 {
     line-height: 50px;
@@ -47,7 +36,8 @@
     color: #fff;
 }
 
-.header h2 {
+#titles {
+    transition: opacity 100ms linear;
     font-size: 5vw;
     color: #fff;
 }
@@ -56,12 +46,6 @@
     background-color: purple;
     position: sticky;
     height: 10px;
-    top: 0;
-}
-
-#headerSvgAnimation {
-    position: absolute;
-    left: 0;
     top: 0;
 }
 

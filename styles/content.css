@@ -35,6 +35,7 @@
     padding: 20px;
     -ms-flex: 80%;
     flex: 80%;
+    transition: color 100ms linear;
 }
 
 .main div {
