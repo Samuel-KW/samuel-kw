@@ -16,20 +16,6 @@
     width: 100%;
 }
 
-/* Give perspective to the animation */
-.header-animation {
-    perspective: 400px;
-}
-
-/* Force divs to be inline */
-.header-animation div {
-    margin-bottom: .1875566421em;
-    line-height: 1.1253398526;
-    display: inline-block;
-    position: relative;
-}
-
-
 .header h1 {
     line-height: 50px;
     font-size: 15vw;
