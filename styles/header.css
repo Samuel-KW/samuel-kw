@@ -1,3 +1,5 @@
+
+
 /* Basic styles for the heading */
 .header {
     /* background-image: url('../images/logo.svg');
@@ -9,27 +11,58 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    font-family: Roboto, Helvetica, Arial, sans-serif;
     padding: 80px;
     height: 100vh;
     display: flex;
     width: 100%;
 }
 
-.header h1 {
-    line-height: 50px;
-    font-size: 15vw;
-    color: #fff;
+.header svg {
+    z-index: 10;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    border: 1px solid transparent;
+    animation: 3s linear 0s infinite forwards borderAnimation;
 }
 
-#titles {
-    transition: opacity 100ms linear;
-    font-size: 5vw;
-    color: #fff;
+.header h2 {
+    z-index: 10;
+    font-family: consolas, math, monospace;
+    color: #416E71;
+}
+
+.image-mosaic {
+    opacity: 0.1;
+    z-index: 0;
+    position: absolute;
+    top: 0; left: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.image-mosaic div {
+    height: 40vh;
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.image-mosaic img {
+    max-height: 100%;
+    min-width: 100%;
+    object-fit: cover;
+    vertical-align: bottom;
+    border-radius: 20px;
+}
+
+@keyframes borderAnimation {
+    0%   { border-image: conic-gradient(from 0deg,   #000, #000, var(--outline-color), #000, #000) 1; }
+    25%  { border-image: conic-gradient(from 90deg , #000, #000, var(--outline-color), #000, #000) 1; }
+    50%  { border-image: conic-gradient(from 180deg, #000, #000, var(--outline-color), #000, #000) 1; }
+    75%  { border-image: conic-gradient(from 270deg, #000, #000, var(--outline-color), #000, #000) 1; }
+    100% { border-image: conic-gradient(from 360deg, #000, #000, var(--outline-color), #000, #000) 1; }
 }
 
 #progress {
-    background-color: purple;
+    background-color: var(--progress-bg);
     position: sticky;
     height: 10px;
     top: 0;
