@@ -67,8 +67,9 @@ class Typer {
 
         // Remove the error
         if (isMistake) {
-            await delay(speed * 3)
+            await delay(speed * 5);
             this.deleteCharacter();
+            await delay(speed * 3);
         }
 
         await delay(speed)
@@ -107,8 +108,8 @@ document.head.appendChild(style);
 
 const handle = new Typer(document.getElementById('titles'));
 
-let words = ['BA in Computer Science', 'UI/UX design', 'Game development', 'Software development', '3D artist'];
+let words = ['5+ years using python', 'ui/ux design', 'software development', '2d/3d graphic design', '7+ years using JavaScript', 'computer science major', 'professional website design'];
 
-delay(4000)
+delay(3000)
     .then(() => handle.deleteContent())
-    .then(() => handle.startTyping(words));
+    .then(() => handle.startTyping(words, 50, 0.05, 4000));
