@@ -1,6 +1,6 @@
 const CACHE_NAME = 'cache-v0.1';
 const CACHE_URLS = [
-    'images/logo.svg'
+    
 ];
 
 self.addEventListener('install', function(event) {
