@@ -76,6 +76,7 @@ class Terminal {
         div.setAttribute("class", "terminal-text");
         div.textContent = text;
 
+
         this._parent.appendChild(div);
         this._lines.push(div);
     }
@@ -90,6 +91,8 @@ class Terminal {
 
         this._lines.push(line);
         this._parent.appendChild(line);
+
+        if (this.enabled) line._inputElem.focus();
 
         line._inputElem.addEventListener("keydown", e => {
 
@@ -125,6 +128,7 @@ class Terminal {
         terminal.inputElem.type("help");
         await delay(1000)
         terminal.handleInput(terminal.inputElem);
+        terminal.inputElem._inputElem.focus()
 
         terminal.enabled = true;
     });
