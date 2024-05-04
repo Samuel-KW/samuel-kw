@@ -6,7 +6,7 @@
     border-radius: 5px;
     color: var(--terminal-text);
     font-family: consolas, monospace;
-    font-size: 1.2em;
+    font-size: 20px;
     width: 700px;
     height: 400px;
     overflow: hidden;
@@ -24,7 +24,7 @@
     pointer-events: none;
     color: var(--terminal-header);
     padding: 0 5px;
-    font-size: .75em;
+    font-size: 15px;
     height: 22px;
 }
 

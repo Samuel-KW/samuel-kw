@@ -1,147 +1,85 @@
-class TerminalLine extends HTMLElement {
+class Terminal {
+    
+    constructor(terminalElement) {
 
-    static observedAttributes = ["active", "value", "user", "path"];
+        this._parent = terminalElement;
+        this._lines = [];
 
-    constructor() {
+        this.inputElem = this.addLine("", this.path, this.user, true);
+        console.log(terminalElement);
+        terminalElement.addEventListener("click", () => this.inputElem._inputElem.focus());
 
-        // Always call super first in constructor
-        super();
-
-        this._wrapper = document.createElement("div");
-        this._wrapper.setAttribute("class", "terminal-line");
-
-        this._user = "Guest@Portfolio";
-        this._userElem = document.createElement("span");
-        this._userElem.setAttribute("class", "terminal-user");
-
-        this._path = "~/index.html";
-        this._pathElem = document.createElement("span");
-        this._pathElem.setAttribute("class", "terminal-path");;
-
-        this._input = null;
-        this._inputElem = document.createElement("span");
-        this._inputElem.setAttribute("class", "terminal-input");;
-
-        this.enabled = false;
+        this.path = "~/index.html";
+        this.user = "Guest@Portfolio";
     }
 
-    connectedCallback() {
-
-        // Create a shadow root
-        const shadow = this.attachShadow({ mode: "open" });
-
-        this._userElem.textContent = this._user;
-
-        this._pathElem.textContent = this._path;
-
-        const delim = document.createElement("span");
-        delim.setAttribute("class", "terminal-text");
-        delim.textContent = ": ";
-
-        const end = document.createElement("span");
-        end.setAttribute("class", "terminal-text");
-        end.textContent = "$ ";
-
-        const style = document.createElement("style");
-        style.textContent = `
-            .terminal-line {
-                font-family: consolas, monospace;
-            }
-
-            .terminal-user {
-                color: var(--terminal-user);
-            }
-            
-            .terminal-text {
-                color: var(--terminal-text);
-            }
-            
-            .terminal-path {
-                color: var(--terminal-path);
-            }
-            
-            .terminal-input {
-                color: var(--terminal-input);
-                outline: none;
-            }
-            
-            .terminal-header {
-                color: var(--terminal-header);
-            }
-
-            .terminal-cursor::after {
-                animation: cursor_blink 1s steps(1) infinite;
-                display: inline-block;
-                content: '_';
-            }
-
-            .terminal-cursor:focus-within::after {
-                display: none;
-            }
-            
-            @keyframes cursor_blink {
-                0%   { opacity: 1; }
-                50%  { opacity: 0; }
-                100% { opacity: 1; }
-            }
-        `;
-
-        this._wrapper.appendChild(this._userElem);
-        this._wrapper.appendChild(delim);
-        this._wrapper.appendChild(this._pathElem);
-        this._wrapper.appendChild(end);
-        this._wrapper.appendChild(this._inputElem);
-
-        shadow.appendChild(style);
-        shadow.appendChild(this._wrapper);
+    get firstLine() {
+        return this._lines[this._lines.length - 1];
     }
 
-    disconnectedCallback() {
-        console.log("Custom element removed from page.");
-    }
+    handleInput(element) {
+        this.inputElem.removeAttribute('active')
 
-    adoptedCallback() {
-        console.log("Custom element moved to new page.");
-    }
+        const input = element.value.trim().toLowerCase();
+        const args = input.split(" ");
+        
+        console.log(args);
 
-    attributeChangedCallback(name, oldValue, newValue) {
-        switch (name) {
-            case "active":
-                if (newValue != null) {
-                    this.enabled = true;
-                    this._inputElem.classList.add('terminal-cursor');
-                    this._inputElem.setAttribute("contenteditable", "plaintext-only");
-                } else {
-                    this.enabled = false;
-                    this._inputElem.classList.remove('terminal-cursor');
-                    this._inputElem.removeAttribute("contenteditable");
-                }
+        switch (args[0]) {
+            case "help":
+                this.addOutputLine("Available commands:");
+                this.addOutputLine("help - display this message");
+                this.addOutputLine("clear - clear the terminal");
                 break;
 
-            case "value":
-                this._inputElem.textContent = newValue;
-                this._input = newValue;
+            case "clear":
+                this._lines.forEach(line => line.remove());
+                this._lines = [];
                 break;
 
-            case "user":
-                this._userElem.textContent = newValue;
-                this.user = newValue;
+            default:
+                this.addOutputLine("Command not found.");
                 break;
-
-            case "path":
-                this._pathElem.textContent = newValue;
-                this._path = newValue;
         }
-        console.log(`Attribute ${name} has changed from ${oldValue} to ${newValue}.`);
+        
+        this.inputElem = this.addLine("", this.path, this.user, true);
     }
 
-    get value() {
-        return this.getAttribute("value");
+    addOutputLine(text) {
+        const div = document.createElement("div");
+        div.setAttribute("class", "terminal-text");
+        div.textContent = text;
+
+        this._parent.appendChild(div);
+        this._lines.push(div);
+    }
+ 
+    addLine(text, path, user, enabled) {
+        const line = document.createElement("terminal-line");
+        
+        if (text) line.setAttribute("value", text);
+        if (path) line.setAttribute("path", path);
+        if (user) line.setAttribute("user", user);
+        if (enabled) line.setAttribute("active", true);
+
+        this._lines.push(line);
+        this._parent.appendChild(line);
+
+        line._inputElem.focus();
+        line._inputElem.addEventListener("keydown", e => {
+            if (e.code === "Enter") {
+                e.preventDefault();
+                this.handleInput(line);
+            }
+        });
+
+        return line;
     }
 
-    set value(newValue) {
-        this.setAttribute("value", newValue);
-    }
 }
 
-window.customElements.define('terminal-line', TerminalLine);
+(async () => {
+    const terminal = new Terminal(document.querySelector("#content .terminal-body-content"));
+    window.terminal = terminal;
+    
+})();
