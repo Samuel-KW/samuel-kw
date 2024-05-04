@@ -1,6 +1,21 @@
 :root {
+    --bg-color-main: #B7B7B7;
+    --bg-path-inner: #DFDFDF;
+    --bg-path-outer: #CCCCCC;
+    
+
+    --terminal-bg: #000000;
+    --terminal-fg: #262626;
+    --terminal-controls: #414141;
+    --terminal-header: #ACACAC;
+
+    --terminal-user: #FF38F8;
+    --terminal-path: #38DDFF;
+    --terminal-text: #DFDFDF;
+    --terminal-input: #f3f3f3;
+
+
     --name-color: #FFBF00;
-    --bg-color-main: #1A2930;
     --progress-bg: #4E9D90;
     --outline-color: #81dae0;
 }

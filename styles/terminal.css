@@ -1,0 +1,12 @@
+
+.terminal {
+    background-color: var(--terminal-bg);
+    color: var(--terminal-text);
+    font-family: consolas, monospace;
+    font-size: 1.2em;
+    padding: 1em;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    width: 650px;
+    height: 475px;
+}

@@ -6,16 +6,40 @@
     font-style: normal;
 }
 
-* {
-    box-sizing: border-box;
-}
 
-html, body {
+body {
     background-color: var(--bg-color-main);
     font-family: serif;
-    overflow-x: hidden;
+    overflow: hidden;
     padding: 0;
     margin: 0;
+}
+
+#content {
+    height: 100vh;
+    width: 100vw;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bg-path {
+    top: 0; left: 0;
+    position: fixed;
+    user-select: none;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.bg-path-outer {
+    fill: var(--bg-path-outer);
+}
+
+.bg-path-inner {
+    fill: var(--bg-path-inner);
 }
 
 ::-webkit-scrollbar {
