@@ -1,3 +1,5 @@
+const delay = delay => new Promise((resolve, reject) => setTimeout(resolve, delay));
+
 
 class AsciiImage extends HTMLElement {
 
@@ -6,7 +8,9 @@ class AsciiImage extends HTMLElement {
     constructor() {
         super();
 
-        this.gradient = "@#&8o:. "; // From light to dark
+        // From light to dark
+        //this.gradient = "@%#*+=-:. "; 
+        this.gradient = "@#%&8o+=-:. "
 
         this._img = document.createElement("img");
 
@@ -18,7 +22,7 @@ class AsciiImage extends HTMLElement {
         this.height = null;
     }
     
-    loadImage (img) {
+    async loadImage (img, speed=10, timeout=10) {
 
         // Draw the image to the canvas
         this._ctx.drawImage(img, 0, 0);
@@ -37,6 +41,9 @@ class AsciiImage extends HTMLElement {
         // How many pixels to skip
         const skip = 5;
 
+        this._ctx.font = "20px consolas";
+        this._ctx.fillStyle = "black";
+
         // Divide image into chunks
         const rowChunks = Math.ceil(data.width / chunkWidth); // Each X chunk is 15 pixels wide
         const columnChunks = Math.ceil(data.height / chunkHeight); // Each Y chunk is 20 pixels tall
@@ -51,6 +58,8 @@ class AsciiImage extends HTMLElement {
             // Average grayscale color of the chunk
             let avg = 0,
                 total = 0;
+
+            if (chunkX % speed == 0) await delay(timeout);
 
             // Loop through each pixel in the chunk
             for (let j = 0; j < chunkHeight; j += skip) {
@@ -88,8 +97,9 @@ class AsciiImage extends HTMLElement {
             const threshold = 256 / this.gradient.length;
             
             // write ascii character to canvas at position
-            this._ctx.font = "20px consolas";
-            this._ctx.fillStyle = 'black';
+            
+            //this._ctx.fillStyle = `rgb(${avg}, ${avg}, ${avg})`;
+            //this._ctx.fillRect(chunkX * chunkWidth, chunkY * chunkHeight, chunkWidth, chunkHeight);
             this._ctx.fillText(this.gradient[Math.floor(avg / threshold)], chunkX * chunkWidth, chunkY * chunkHeight);
         }
 
@@ -111,13 +121,11 @@ class AsciiImage extends HTMLElement {
         this._img.onload = () => {
             
             console.time("loadImage");
-            const data = this.loadImage(this._img);
-            // this._ctx.putImageData(data, 0, 0);
-            console.timeEnd("loadImage");
-
-            setTimeout(() => {
+            const data = this.loadImage(this._img, this._img.width, 20).then(() => {
                 this._img.classList.add("loaded");
-            }, 1000);
+            });
+            // this._ctx.putImageData(data, 0, 0);
+
         }
         this._img.src = this.src;
         
