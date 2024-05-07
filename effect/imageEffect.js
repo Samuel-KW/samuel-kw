@@ -33,7 +33,7 @@ class AsciiImage extends HTMLElement {
         // Get the image data
         const data = this._ctx.getImageData(0, 0, img.width, img.height);
         const pixels = data.data;
-
+        console.log(data);
         // Clear the canvas before drawing
         this._ctx.clearRect(0, 0, data.width, data.height);
 
@@ -221,25 +221,25 @@ class AsciiImage extends HTMLElement {
         shadow.appendChild(this._img);
     }
 }
+
+// https://www.compuphase.com/graphic/scale3.htm
 window.customElements.define("ascii-img", AsciiImage);
 
-// const importObject = {
-//     imports: {
-//       imported_func: arg => {
-//         console.log(arg);
-//       }
-//     }
-//   };
+// WebAssembly.instantiateStreaming(fetch("ascii.wasm"), {}).then((obj) => {
+//     console.log(obj.instance.exports.add(1, 2)); // "3"
+// });
 
-//   const request = new XMLHttpRequest();
-//   request.open("GET", "ascii.wasm");
-//   request.responseType = "arraybuffer";
-//   request.send();
+const memory = new WebAssembly.Memory({
+    initial: 10,
+    maximum: 100
+});
 
-//   request.onload = () => {
-//     const bytes = request.response;
-//     WebAssembly.instantiate(bytes, importObject)
-//     .then(obj => {
-//       obj.instance.exports.exported_func();
-//     });
-//   };
+WebAssembly.instantiateStreaming(fetch("ascii.wasm"), { js: { mem: memory } })
+    .then(obj => {
+        const summands = new Uint8ClampedArray(memory.buffer);
+        for (let i = 0; i < 10; i++) {
+            summands[i] = i;
+        }
+        const sum = obj.instance.exports.accumulate(0, 10, 60, 100);
+        console.log(sum);
+    });
