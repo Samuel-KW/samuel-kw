@@ -8,16 +8,16 @@ class AsciiImage extends HTMLElement {
     constructor() {
         super();
 
-        // From light to dark
-        //this.gradient = "@%#*+=-:. "; 
-        this.gradient = "@#%&8o+=-. ";
+        // From dark to light, must be 4, 8, 16, 32, etc characters long
+        this.gradient = "@%8o=-. ";
+        // this.gradient = "@%#+=-. "; 
         // this.gradient = "@#%&ʬ8֍+=-. ";
         // this.gradient = " `.-':_,^=;><+!rc*/z?sLTv)J7(|Fi{C}fI31tlu[neoZ5Yxjya]2ESwqkP6h9d4VpOGbUAKXHm8RD#$Bg0MNWQ%&@".split("").reverse().join("");
 
         this._img = document.createElement("img");
 
         this._c = document.createElement("canvas");
-        this._ctx = this._c.getContext("2d");
+        this._ctx = this._c.getContext("2d", { alpha: false, antialias: false, depth: false });
     
         this.src = null;
         this.width = null;
@@ -32,17 +32,36 @@ class AsciiImage extends HTMLElement {
         
         // Get the image data
         const data = this._ctx.getImageData(0, 0, img.width, img.height);
-        const pixels = data.data;
-        console.log(data);
+        const pixels = new Uint32Array(data.data.buffer);
+        
+        window.pixels = pixels;
+        console.log(pixels);
+
         // Clear the canvas before drawing
-        this._ctx.clearRect(0, 0, data.width, data.height);
+        this._ctx.fillStyle = "#ffffff";
+        this._ctx.fillRect(0, 0, data.width, data.height);
 
         this._ctx.font = "20px consolas";
-        this._ctx.fillStyle = "black";
+        this._ctx.fillStyle = "#000000";
+        
+        const bin = await (await fetch("ascii.wasm")).arrayBuffer();
+        const module = new WebAssembly.Module(bin);
 
+        const pages = Math.round(img.width * img.height * 4 / 65536);
+        const memory = new WebAssembly.Memory({ initial: pages, maximum: 256 });
+        const memoryPixel = new Uint32Array(memory.buffer);
+        memoryPixel.set(pixels);
+
+        const instance = new WebAssembly.Instance(module, { env: { img: memory } });
+        
         console.time("new method");
-        this.pixelsToAsciiNew(pixels, data.width, data.height);
+        instance.exports.addOneMemory(0, pixels.length, img.width, img.height);
         console.timeEnd("new method");
+        // pgm.instance.exports.addOneMemory(0, 10, 60, 100);
+
+        // console.time("new method");
+        // this.pixelsToAsciiV3(pixels, data.width, data.height);
+        // console.timeEnd("new method");
         // this.pixelsToAscii(pixels, data.width, data.height);
 
         // console.time("new method");
@@ -128,7 +147,7 @@ class AsciiImage extends HTMLElement {
         }
     }
 
-    pixelsToAsciiNew(pixels, width, height) {
+    pixelsToAsciiV2(pixels, width, height) {
 
         // Calculate the threshold for each character
         const threshold = 256 / this.gradient.length;
@@ -165,6 +184,61 @@ class AsciiImage extends HTMLElement {
 
             const avg = (0.1495 * (pixels[index1] + pixels[index2])) + (0.2935 * (pixels[index1+1] + pixels[index2+1])) + (0.057 * (pixels[index1+2] + pixels[index2+2]));
             // 128.toString(16).padStart(2, 0);
+
+            // this._ctx.fillStyle = `rgb(${avg}, ${avg}, ${avg})`;
+            // this._ctx.fillRect(baseX, baseY, chunkWidth, chunkHeight);
+            this._ctx.fillText(this.gradient[Math.floor(avg / threshold)], baseX, baseY);
+        }
+    }
+
+    /*
+
+        Averaging the two pixels is not the best way to get the average color of the two pixels.
+
+        The best way to get the average color of two pixels is to bitwise XOR the two pixels and then divide by 2.
+
+    */
+
+    pixelsToAsciiV3(pixelsUint8, width, height) {
+
+        const pixels = new Uint32Array(pixelsUint8.buffer);
+
+
+        // Calculate the threshold for each character
+        const threshold = 256 / this.gradient.length;
+
+        // Width and height of each chunk
+        const chunkWidth = 15;
+        const chunkHeight = 20;
+
+        const sampleOffsetX1 = 4;
+        const sampleOffsetY1 = 5;
+
+        const sampleOffsetX2 = 11;
+        const sampleOffsetY2 = 15;
+
+        // Divide image into chunks
+        const rowChunks = Math.ceil(width / chunkWidth); // Each X chunk is 15 pixels wide
+        const columnChunks = Math.ceil(height / chunkHeight); // Each Y chunk is 20 pixels tall
+
+        // Loop through each chunk
+        for (let i = 0; i < rowChunks * columnChunks; ++i) {
+            
+            // Get the chunk's position
+            const chunkX = i % rowChunks;
+            const chunkY = Math.floor(i / rowChunks);
+
+            //if (chunkX % speed == 0) await delay(timeout);
+
+            const baseX = chunkX * chunkWidth;
+            const baseY = chunkY * chunkHeight;
+
+            // Get the index of the first pixel in the chunk
+            const index1 = ((baseY + sampleOffsetY1) * width + baseX + sampleOffsetX1);
+            const index2 = ((baseY + sampleOffsetY2) * width + baseX + sampleOffsetX2);
+
+            // Find overage of two pixels
+            const avg = ( (((pixels[index1] ^ pixels[index2]) & 0xfefefefe) >> 1) + (pixels[index1] & pixels[index2]) ) & 0xff;
 
             // this._ctx.fillStyle = `rgb(${avg}, ${avg}, ${avg})`;
             // this._ctx.fillRect(baseX, baseY, chunkWidth, chunkHeight);
@@ -229,17 +303,4 @@ window.customElements.define("ascii-img", AsciiImage);
 //     console.log(obj.instance.exports.add(1, 2)); // "3"
 // });
 
-const memory = new WebAssembly.Memory({
-    initial: 10,
-    maximum: 100
-});
 
-WebAssembly.instantiateStreaming(fetch("ascii.wasm"), { js: { mem: memory } })
-    .then(obj => {
-        const summands = new Uint8ClampedArray(memory.buffer);
-        for (let i = 0; i < 10; i++) {
-            summands[i] = i;
-        }
-        const sum = obj.instance.exports.accumulate(0, 10, 60, 100);
-        console.log(sum);
-    });
