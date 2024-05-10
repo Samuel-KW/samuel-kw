@@ -22,20 +22,27 @@ class AsciiImage extends HTMLElement {
         this.src = null;
         this.width = null;
         this.height = null;
+
+        this.bin = null;
+        this.module = null;
+        this.memory = new WebAssembly.Memory({ initial: 1, maximum: 256 });
+        
     }
     
     async loadImage (img, speed=10, timeout=10) {
 
+        // Load the WebAssembly module
+        this.bin = await (await fetch("ascii.wasm")).arrayBuffer();
+        this.module = new WebAssembly.Module(this.bin);
 
         // Draw the image to the canvas
         this._ctx.drawImage(img, 0, 0);
         
         // Get the image data
         const data = this._ctx.getImageData(0, 0, img.width, img.height);
-        const pixels = new Uint32Array(data.data.buffer);
-        
-        window.pixels = pixels;
-        console.log(pixels);
+        const pixels = data.data;
+
+        const iterations = 10000;
 
         // Clear the canvas before drawing
         this._ctx.fillStyle = "#ffffff";
@@ -43,40 +50,33 @@ class AsciiImage extends HTMLElement {
 
         this._ctx.font = "20px consolas";
         this._ctx.fillStyle = "#000000";
-        
-        const bin = await (await fetch("ascii.wasm")).arrayBuffer();
-        const module = new WebAssembly.Module(bin);
 
-        const pages = Math.round(img.width * img.height * 4 / 65536);
-        const memory = new WebAssembly.Memory({ initial: pages, maximum: 256 });
-        const memoryPixel = new Uint32Array(memory.buffer);
-        memoryPixel.set(pixels);
+        console.time("method 4");
+        // for (let i = 0; i < iterations; ++i)
+            this.pixelsToAsciiV4(pixels, data.width, data.height);
+        console.timeEnd("method 4");
 
-        const instance = new WebAssembly.Instance(module, { env: { img: memory } });
-        
-        console.time("new method");
-        instance.exports.addOneMemory(0, pixels.length, img.width, img.height);
-        console.timeEnd("new method");
-        // pgm.instance.exports.addOneMemory(0, 10, 60, 100);
+        // console.time("method 3");
+        // for (let i = 0; i < iterations; ++i)
+        //     this.pixelsToAsciiV3(pixels, data.width, data.height);
+        // console.timeEnd("method 3");
 
-        // console.time("new method");
-        // this.pixelsToAsciiV3(pixels, data.width, data.height);
-        // console.timeEnd("new method");
-        // this.pixelsToAscii(pixels, data.width, data.height);
+        // console.time("method 2");
+        // for (let i = 0; i < iterations; ++i)
+        //     this.pixelsToAsciiV2(pixels, data.width, data.height);
+        // console.timeEnd("method 2");
 
-        // console.time("new method");
-        // for (let i = 0; i < 100; ++i)
-        //     this.pixelsToAsciiNew(pixels, data.width, data.height);
-        // console.timeEnd("new method");
-
-        // console.time("old method");
-        // for (let i = 0; i < 100; ++i)
+        // console.time("method 1");
+        // for (let i = 0; i < iterations; ++i)
         //     this.pixelsToAscii(pixels, data.width, data.height);
-        // console.timeEnd("old method");
+        // console.timeEnd("method 1");
 
         return data;
     }
 
+    /* 
+        Method to convert pixels to ASCII with basic sampling
+    */
     pixelsToAscii(pixels, width, height) {
 
 
@@ -125,11 +125,6 @@ class AsciiImage extends HTMLElement {
                     // Add value to the average
                     avg += grayscale;
                     total++;
-
-                    // Set the new pixel values
-                    pixels[index] = grayscale;
-                    pixels[index + 1] = grayscale;
-                    pixels[index + 2] = grayscale;
                 }
             }
 
@@ -143,10 +138,13 @@ class AsciiImage extends HTMLElement {
             
             // this._ctx.fillStyle = `rgb(${avg}, ${avg}, ${avg})`;
             // this._ctx.fillRect(chunkX * chunkWidth, chunkY * chunkHeight, chunkWidth, chunkHeight);
-            this._ctx.fillText(this.gradient[Math.floor(avg / threshold)], chunkX * chunkWidth, chunkY * chunkHeight);
+            // this._ctx.fillText(this.gradient[Math.floor(avg / threshold)], chunkX * chunkWidth, chunkY * chunkHeight);
         }
     }
 
+    /*
+        Optimized method to convert pixels to ASCII using specific 2 pixel sampling
+    */
     pixelsToAsciiV2(pixels, width, height) {
 
         // Calculate the threshold for each character
@@ -187,18 +185,13 @@ class AsciiImage extends HTMLElement {
 
             // this._ctx.fillStyle = `rgb(${avg}, ${avg}, ${avg})`;
             // this._ctx.fillRect(baseX, baseY, chunkWidth, chunkHeight);
-            this._ctx.fillText(this.gradient[Math.floor(avg / threshold)], baseX, baseY);
+            // this._ctx.fillText(this.gradient[Math.floor(avg / threshold)], baseX, baseY);
         }
     }
 
     /*
-
-        Averaging the two pixels is not the best way to get the average color of the two pixels.
-
-        The best way to get the average color of two pixels is to bitwise XOR the two pixels and then divide by 2.
-
+        Optimized method to convert pixels to ASCII using bitwise operations
     */
-
     pixelsToAsciiV3(pixelsUint8, width, height) {
 
         const pixels = new Uint32Array(pixelsUint8.buffer);
@@ -226,7 +219,7 @@ class AsciiImage extends HTMLElement {
             
             // Get the chunk's position
             const chunkX = i % rowChunks;
-            const chunkY = Math.floor(i / rowChunks);
+            const chunkY = i / rowChunks | 0;
 
             //if (chunkX % speed == 0) await delay(timeout);
 
@@ -244,6 +237,25 @@ class AsciiImage extends HTMLElement {
             // this._ctx.fillRect(baseX, baseY, chunkWidth, chunkHeight);
             this._ctx.fillText(this.gradient[Math.floor(avg / threshold)], baseX, baseY);
         }
+    }
+
+    pixelsToAsciiV4(pixelsUint8, width, height) {
+        const pixels = new Uint32Array(pixelsUint8.buffer);
+
+        if (pixels.byteLength > this.memory.buffer.byteLength) {
+            const curr = this.memory.buffer.byteLength >> 16; // Get current number of pages
+            const pages = Math.round(width * height * 4 / 65536) - curr; // Pages to add
+            this.memory.grow(pages); 
+        }
+        
+        const memoryPixel = new Uint32Array(this.memory.buffer);
+        memoryPixel.set(pixels);
+
+        const instance = new WebAssembly.Instance(this.module, { env: { img: this.memory } });
+        
+        console.log(pixels.buffer);
+        instance.exports.addOneMemory(0, pixels.length, width, height);
+        console.log(this.memory.buffer);
     }
 
     connectedCallback() {
