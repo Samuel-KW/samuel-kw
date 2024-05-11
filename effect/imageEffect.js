@@ -254,8 +254,22 @@ class AsciiImage extends HTMLElement {
         const instance = new WebAssembly.Instance(this.module, { env: { img: this.memory } });
         
         console.log(pixels.buffer);
-        instance.exports.addOneMemory(0, pixels.length, width, height);
-        console.log(this.memory.buffer);
+        
+        const length = instance.exports.imgToAscii(pixels.length, width, height);
+        const buff = new Uint8Array(this.memory.buffer);
+        const asciiWidth = buff[length];
+        const asciiHeight = length / asciiWidth;
+
+        const threshold = 256 / this.gradient.length;
+
+        for (let i = 0; i < length; ++i) {
+            const x = i % asciiWidth;
+            const y = i / asciiWidth | 0;
+            
+            this._ctx.fillText(this.gradient[(buff[i] / threshold) | 0], x * 15, y * 20);
+        }
+
+        console.log(buff, asciiWidth, asciiHeight, length);
     }
 
     connectedCallback() {

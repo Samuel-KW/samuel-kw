@@ -1,7 +1,8 @@
 (module
 	(memory (import "env" "img") 1)
-	(func (export "addOneMemory") (param $ptr i32) (param $len i32) (param $width i32) (param $height i32)
+	(func (export "imgToAscii") (param $len i32) (param $width i32) (param $height i32) (result i32)
 
+		(local $ptr i32)
 		(local $index i32)
 		(local $end i32)
 
@@ -27,14 +28,6 @@
 		(local $avg i32)
 
 
-		(local.set $index (i32.const 0))
-		(local.set $end
-			(i32.mul
-				(local.get $rowChunks)
-				(local.get $columnChunks)
-			)
-		)
-
 		;; The width and height of each chunk
 		(local.set $chunkWidth 		(i32.const 15))
 		(local.set $chunkHeight 	(i32.const 20))
@@ -58,6 +51,18 @@
 			(i32.div_s
 				(local.get $height)
 				(local.get $chunkHeight)
+			)
+		)
+
+		;; Initialize the index and pointer
+		(local.set $index (i32.const 0))
+		(local.set $ptr (i32.const 0))
+
+		;; Calculate the end index
+		(local.set $end
+			(i32.mul
+				(local.get $rowChunks)
+				(local.get $columnChunks)
 			)
 		)
 
@@ -170,7 +175,7 @@
 
 				;; Store the average to memory
 				(i32.store
-					(local.get $index)
+					(local.get $ptr)
 					(local.get $avg)
 				)
 
@@ -178,11 +183,11 @@
 				(local.set $ptr
 					(i32.add
 						(local.get $ptr)
-						(i32.const 4)
+						(i32.const 1)
 					)
 				)
 
-				;; Increment the output position
+				;; Increment the position
 				(local.set $index
 					(i32.add
 						(local.get $index)
@@ -194,5 +199,14 @@
 				(br $top)
 			)
 		)
+
+		;; Set last value to the length of pixels
+		(i32.store
+			(local.get $end)
+			(local.get $rowChunks)
+		)
+
+		;; Return the pointer
+		(local.get $end)
 	)
 )
