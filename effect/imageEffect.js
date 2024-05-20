@@ -347,6 +347,10 @@ class AsciiImage extends HTMLElement {
         this.width = (this.getAttribute("width") ?? 256) * this.scale;
         this.height = (this.getAttribute("height") ?? 256) * this.scale;
 
+        this.style.display = "inline-block";
+        this.style.width = this.width + "px";
+        this.style.height = this.height + "px";
+
         this._c.width = this.width;
         this._c.height = this.height;
 
@@ -354,7 +358,6 @@ class AsciiImage extends HTMLElement {
         this._img.onload = async () => {
             
             const data = await this.loadImage(this._img, this._img.width, 1);
-            
             
             this._img.classList.add("loaded");
 
