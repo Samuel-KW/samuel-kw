@@ -8,7 +8,6 @@ class AsciiImage extends HTMLElement {
     constructor() {
         super();
 
-        // From dark to light, must be 4, 8, 16, 32, etc characters long
         this.gradient = "@%8o=-. ";
         // this.gradient = "@%#+=-. "; 
         // this.gradient = "@#%&ʬ8֍+=-. ";
@@ -23,38 +22,46 @@ class AsciiImage extends HTMLElement {
         this.width = null;
         this.height = null;
 
-        this.bin = null;
-        this.module = null;
-        this.memory = new WebAssembly.Memory({ initial: 1, maximum: 256 });
+        // this.bin = null;
+        // this.module = null;
+        // this.memory = new WebAssembly.Memory({ initial: 1, maximum: 256 });
         
     }
     
     async loadImage (img, speed=10, timeout=10) {
 
         // Load the WebAssembly module
-        this.bin = await (await fetch("ascii.wasm")).arrayBuffer();
-        this.module = new WebAssembly.Module(this.bin);
+        // this.bin = await (await fetch("ascii.wasm")).arrayBuffer();
+        // this.module = new WebAssembly.Module(this.bin);
 
         // Draw the image to the canvas
-        this._ctx.drawImage(img, 0, 0);
-        
+        this._ctx.drawImage(img, 0, 0, img.width * (1 / this.scale), img.height * (1 / this.scale), 0, 0, img.width, img.height);
+
         // Get the image data
         const data = this._ctx.getImageData(0, 0, img.width, img.height);
         const pixels = data.data;
 
-        const iterations = 10000;
+        const iterations = 1;
 
         // Clear the canvas before drawing
         this._ctx.fillStyle = "#ffffff";
-        this._ctx.fillRect(0, 0, data.width, data.height);
+        this._ctx.fillRect(0, 0, this._c.width, this._c.height);
 
         this._ctx.font = "20px consolas";
         this._ctx.fillStyle = "#000000";
+        this._ctx.letterSpacing = "4px";
 
-        console.time("method 4");
+        await this.pixelsToAsciiV5(pixels, data.width, data.height);
+
+        // console.time("method 5");
         // for (let i = 0; i < iterations; ++i)
-            this.pixelsToAsciiV4(pixels, data.width, data.height);
-        console.timeEnd("method 4");
+        //     this.pixelsToAsciiV5(pixels, data.width, data.height);
+        // console.timeEnd("method 5");
+
+        // console.time("method 4");
+        // for (let i = 0; i < iterations; ++i)
+        //     this.pixelsToAsciiV4(pixels, data.width, data.height);
+        // console.timeEnd("method 4");
 
         // console.time("method 3");
         // for (let i = 0; i < iterations; ++i)
@@ -219,9 +226,7 @@ class AsciiImage extends HTMLElement {
             
             // Get the chunk's position
             const chunkX = i % rowChunks;
-            const chunkY = i / rowChunks | 0;
-
-            //if (chunkX % speed == 0) await delay(timeout);
+            const chunkY = i / rowChunks | 0;            
 
             const baseX = chunkX * chunkWidth;
             const baseY = chunkY * chunkHeight;
@@ -233,12 +238,18 @@ class AsciiImage extends HTMLElement {
             // Find overage of two pixels
             const avg = ( (((pixels[index1] ^ pixels[index2]) & 0xfefefefe) >> 1) + (pixels[index1] & pixels[index2]) ) & 0xff;
 
+            // Doesn't save almost any computation time
+            // this._ctx.fillText(this.gradient[avg >> 5], baseX, baseY);
+            this._ctx.fillText(this.gradient[Math.floor(avg / threshold)], baseX, baseY);
+
             // this._ctx.fillStyle = `rgb(${avg}, ${avg}, ${avg})`;
             // this._ctx.fillRect(baseX, baseY, chunkWidth, chunkHeight);
-            this._ctx.fillText(this.gradient[Math.floor(avg / threshold)], baseX, baseY);
         }
     }
 
+    /*
+        Optimized method to convert pixels to ASCII using WebAssembly
+    */
     pixelsToAsciiV4(pixelsUint8, width, height) {
         const pixels = new Uint32Array(pixelsUint8.buffer);
 
@@ -272,13 +283,69 @@ class AsciiImage extends HTMLElement {
         console.log(buff, asciiWidth, asciiHeight, length);
     }
 
+    /*
+        Optimized method to convert pixels to ASCII using bitwise operations and better chunk sampling
+    */
+    async pixelsToAsciiV5(pixelsUint8, width, height) {
+
+        const pixels = new Uint32Array(pixelsUint8.buffer);
+
+        // Calculate the threshold for each character
+        const threshold = 256 / this.gradient.length;
+
+        // Width and height of each chunk
+        const chunkWidth = 15;
+        const chunkHeight = 20;
+
+        const sampleOffsetX1 = 4;
+        const sampleOffsetY1 = 5;
+
+        const sampleOffsetX2 = 11;
+        const sampleOffsetY2 = 15;
+
+        // Divide image into chunks
+        const rowChunks = Math.ceil(width / chunkWidth); // Each X chunk is 15 pixels wide
+        const columnChunks = Math.ceil(height / chunkHeight); // Each Y chunk is 20 pixels tall
+
+        // Get the chunk's position
+        let chunkX = 0;
+        let chunkY = 0;
+        let chars = "";
+
+        // Loop through each chunk
+        for (let i = 0; i < rowChunks * columnChunks; ++i) {
+            
+            const baseX = chunkX * chunkWidth;
+            const baseY = chunkY * chunkHeight;
+
+            // Get the index of the first pixel in the chunk
+            const index1 = ((baseY + sampleOffsetY1) * width + baseX + sampleOffsetX1);
+            const index2 = ((baseY + sampleOffsetY2) * width + baseX + sampleOffsetX2);
+
+            // Find overage of two pixels
+            const avg = ( (((pixels[index1] ^ pixels[index2]) & 0xfefefefe) >> 1) + (pixels[index1] & pixels[index2]) ) & 0xff;
+
+            chars += this.gradient[Math.floor(avg / threshold)];
+
+            chunkX++;
+            if (chunkX >= rowChunks) {
+                this._ctx.fillText(chars, 0, baseY);
+                await delay(10);
+                chars = "";
+                chunkX = 0;
+                chunkY++;
+            }
+        }
+    }
+
     connectedCallback() {
 
         const shadow = this.attachShadow({ mode: "open" });
 
         this.src = this.getAttribute("src");
-        this.width = this.getAttribute("width") ?? 256;
-        this.height = this.getAttribute("height") ?? 256;
+        this.scale = Number(this.getAttribute("scale") ?? 1);
+        this.width = (this.getAttribute("width") ?? 256) * this.scale;
+        this.height = (this.getAttribute("height") ?? 256) * this.scale;
 
         this._c.width = this.width;
         this._c.height = this.height;
@@ -289,11 +356,13 @@ class AsciiImage extends HTMLElement {
             const data = await this.loadImage(this._img, this._img.width, 1);
             
             
-            // this._img.classList.add("loaded");
+            this._img.classList.add("loaded");
 
             // this._ctx.putImageData(data, 0, 0);
 
         }
+        this._img.width = this.width;
+        this._img.height = this.height;
         this._img.src = this.src;
         
         
