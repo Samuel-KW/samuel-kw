@@ -1,4 +1,4 @@
-const delay = delay => new Promise((resolve, reject) => setTimeout(resolve, delay));
+if (!window.delay) window.delay = delay => new Promise((resolve, reject) => setTimeout(resolve, delay));
 
 
 class AsciiImage extends HTMLElement {
@@ -14,13 +14,17 @@ class AsciiImage extends HTMLElement {
         // this.gradient = " `.-':_,^=;><+!rc*/z?sLTv)J7(|Fi{C}fI31tlu[neoZ5Yxjya]2ESwqkP6h9d4VpOGbUAKXHm8RD#$Bg0MNWQ%&@".split("").reverse().join("");
 
         this._img = document.createElement("img");
+        this._container = document.createElement("div");
 
         this._c = document.createElement("canvas");
-        this._ctx = this._c.getContext("2d", { alpha: false, antialias: false, depth: false });
+        this._ctx = this._c.getContext("2d", { antialias: false, depth: false });
     
         this.src = null;
         this.width = null;
         this.height = null;
+        this.scale = 1;
+        this.alt = "ASCII Image";
+        this.color = "#000000";
 
         // this.bin = null;
         // this.module = null;
@@ -44,11 +48,11 @@ class AsciiImage extends HTMLElement {
         const iterations = 1;
 
         // Clear the canvas before drawing
-        this._ctx.fillStyle = "#ffffff";
-        this._ctx.fillRect(0, 0, this._c.width, this._c.height);
+        this._ctx.clearRect(0, 0, this._c.width, this._c.height);
+        // this._ctx.fillRect(0, 0, this._c.width, this._c.height);
 
         this._ctx.font = "20px consolas";
-        this._ctx.fillStyle = "#000000";
+        this._ctx.fillStyle = this.color;
         this._ctx.letterSpacing = "4px";
 
         await this.pixelsToAsciiV5(pixels, data.width, data.height);
@@ -346,39 +350,41 @@ class AsciiImage extends HTMLElement {
         this.scale = Number(this.getAttribute("scale") ?? 1);
         this.width = (this.getAttribute("width") ?? 256) * this.scale;
         this.height = (this.getAttribute("height") ?? 256) * this.scale;
-
-        this.style.display = "inline-block";
-        this.style.width = this.width + "px";
-        this.style.height = this.height + "px";
-
+        
         this._c.width = this.width;
         this._c.height = this.height;
 
         this._img = new Image(); 
         this._img.onload = async () => {
             
-            const data = await this.loadImage(this._img, this._img.width, 1);
+            await this.loadImage(this._img, this._img.width, 1);
             
             this._img.classList.add("loaded");
 
-            // this._ctx.putImageData(data, 0, 0);
-
         }
+
         this._img.width = this.width;
         this._img.height = this.height;
         this._img.src = this.src;
         
-        
         const style = document.createElement("style");
         style.textContent = `
+
+            div {
+                display: grid;
+            }
+
+            div > * {
+                grid-area: 1/1;
+            }
+
             canvas {
-                position: absolute;
-                z-index: -1;
+                z-index: 1;
             }
 
             img {
                 transition: opacity 1s ease;
-                position: absolute;
+                z-index: 2;
                 opacity: 0;
             }
 
@@ -389,16 +395,10 @@ class AsciiImage extends HTMLElement {
 
 
         shadow.appendChild(style);
-        shadow.appendChild(this._c);
-        shadow.appendChild(this._img);
+        shadow.appendChild(this._container);
+        this._container.appendChild(this._c);
+        this._container.appendChild(this._img);
     }
 }
 
-// https://www.compuphase.com/graphic/scale3.htm
 window.customElements.define("ascii-img", AsciiImage);
-
-// WebAssembly.instantiateStreaming(fetch("ascii.wasm"), {}).then((obj) => {
-//     console.log(obj.instance.exports.add(1, 2)); // "3"
-// });
-
-

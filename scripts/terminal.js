@@ -94,19 +94,21 @@ class Terminal {
 
         if (this.enabled) line._inputElem.focus();
 
-        line._inputElem.addEventListener("keydown", e => {
-
+        const handleInput = e => {
             if (!this.enabled) {
                 e.stopPropagation();
                 e.preventDefault();
                 return;
             }
 
-            if (e.code === "Enter") {
+            if (e.code === "Enter" || e.key === "Enter") {
                 e.preventDefault();
                 this.handleInput(line);
             }
-        });
+        }
+
+        line._inputElem.addEventListener("keydown", handleInput);
+        line._inputElem.addEventListener("oninput", handleInput);
 
         return line;
     }
