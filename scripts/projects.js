@@ -62,3 +62,10 @@ projects.push(new Project({
     description: ``,
     images: []
 }));
+
+projects.push(new Project({
+    title: 'Grafana Telegraph Influx Stack',
+    tags: [ 'telegraf', 'grafana', 'influxdb' ],
+    description: ``,
+    images: []
+}));
