@@ -19,20 +19,46 @@ class Tag {
     }
 }
 
-tags.sendgrid = new Tag(
-    'Sendgrid',
+tags.sendgrid = new Tag('Sendgrid',
     'Sendgrid is an API ultility used for sending emails',
-    'https://github.com/sendgrid/')
+    'https://github.com/sendgrid/');
 
-tags.python = new Tag(
-    'Python',
+tags.python = new Tag('Python',
     'Python is a popular programming language known for it\'s versatility and quick development.',
-    'https://python.org/')
+    'https://python.org/');
 
-tags.synology = new Tag(
-    'Synology',
+tags.synology = new Tag('Synology',
     'Synology is a resource storage and managment system, in our case used primarilly for secure system backups.',
-    '')
+    'https://www.synology.com/');
+
+tags.influxdb = new Tag('InfluxDB',
+    'InfluxDB is a time series database used for storing and managing large amounts of data.',
+    'https://www.influxdata.com/');
+
+tags.telegraf = new Tag('Telegraf',
+    'Telegraf is a plugin-driven server agent for collecting and reporting metrics.',
+    'https://www.influxdata.com/time-series-platform/telegraf/');
+
+tags.grafana = new Tag('Grafana',
+    'Grafana is a multi-platform open source analytics and interactive visualization web application.',
+    'https://grafana.com/');
+
+tags.modbus = new Tag('Modbus',
+    'Modbus is a serial communication protocol used for transmitting information over serial lines.',
+    'https://www.modbus.org/');
+
+tags.nodejs = new Tag('Node.js',
+    'Node.js is a JavaScript runtime built on Chrome\'s V8 JavaScript engine.',
+    'https://nodejs.org/');
+
+tags.axios = new Tag('Axios',
+    'Axios is a promise based HTTP client for the browser and node.js.',
+    'https://axios-http.com/docs/intro');
+
+tags.pusher = new Tag('Pusher',
+    'Pusher is a hosted service that makes it super-easy to add real-time data and functionality to web and mobile applications.',
+    'https://pusher.com/');
+
 
 
 projects.push(new Project({
