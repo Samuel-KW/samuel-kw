@@ -73,3 +73,19 @@ class WhoamiCommand extends TerminalCommand {
 
     execute() { this.print("Samuel Walls"); }
 }
+
+class ClearCommand extends TerminalCommand {
+
+    description = "Clear the terminal";
+    name = "clear";
+
+    execute() { this.handler.clear(); }
+}
+
+class LsCommand extends TerminalCommand {
+
+    description = "List directory contents";
+    name = "ls";
+
+    execute() { this.print("Not implemented"); }
+}

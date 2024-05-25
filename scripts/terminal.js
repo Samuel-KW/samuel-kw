@@ -31,6 +31,8 @@ class Terminal {
 
         this.registerCommand(new HelpCommand(this));
         this.registerCommand(new WhoamiCommand(this));
+        this.registerCommand(new ClearCommand(this));
+        this.registerCommand(new LsCommand(this));
     }
 
     get firstLine() {
@@ -67,6 +69,11 @@ class Terminal {
 
     print(...args) {
         this.addOutputLine(args.join(" "));
+    }
+
+    clear () {
+        this._lines.forEach(line => line.remove());
+        this._lines = [];
     }
 
     addOutputLine(text) {
