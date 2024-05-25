@@ -30,6 +30,7 @@ class Terminal {
         });
 
         this.registerCommand(new HelpCommand(this));
+        this.registerCommand(new WhoamiCommand(this));
     }
 
     get firstLine() {
