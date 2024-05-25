@@ -65,3 +65,11 @@ class HelpCommand extends TerminalCommand {
             this.print(command, "\t", this.handler.commands[command].description);
     }
 }
+
+class WhoamiCommand extends TerminalCommand {
+
+    description = "Display the current user";
+    name = "whoami";
+
+    execute() { this.print("Samuel Walls"); }
+}
