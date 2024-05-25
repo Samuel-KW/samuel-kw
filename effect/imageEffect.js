@@ -334,7 +334,7 @@ class AsciiImage extends HTMLElement {
             chunkX++;
             if (chunkX >= rowChunks) {
                 this._ctx.fillText(chars, 0, baseY);
-                await delay(10);
+                await delay(20);
                 chars = "";
                 chunkX = 0;
                 chunkY++;
@@ -350,6 +350,7 @@ class AsciiImage extends HTMLElement {
         this.scale = Number(this.getAttribute("scale") ?? 1);
         this.width = (this.getAttribute("width") ?? 256) * this.scale;
         this.height = (this.getAttribute("height") ?? 256) * this.scale;
+        this.color = (this.getAttribute("color") ?? "#000000");
         
         this._c.width = this.width;
         this._c.height = this.height;

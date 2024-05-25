@@ -3,72 +3,69 @@ class Terminal {
     
     constructor(terminalElement) {
 
+        this.commands = {};
+
         this._parent = terminalElement;
         this._lines = [];
 
+        this.path = "~/index.html";
+        this.user = "Guest@Portfolio";
+        
+        this.enabled = false;
         this.inputElem = this.addLine("", this.path, this.user, true);
-        terminalElement.addEventListener("mouseup", e => {
+
+        this.init();
+    }
+
+    init() {
+
+        this._parent.addEventListener("mouseup", () => {
             if (this.enabled)
                 this.inputElem._inputElem.focus();
         });
 
-        terminalElement.addEventListener("mousedown", e => {
+        this._parent.addEventListener("mousedown", e => {
             if (!this.enabled)
                 e.preventDefault();
         });
 
-        this.path = "~/index.html";
-        this.user = "Guest@Portfolio";
-
-        this.enabled = false;
+        this.registerCommand(new HelpCommand(this));
     }
 
     get firstLine() {
         return this._lines[this._lines.length - 1];
     }
 
+    registerCommand(command) {
+        this.commands[command.name] = command;
+    }
+
+    executeCommand(command, args) {
+        if (this.commands[command]) {
+            // try {
+                this.commands[command].execute(args);
+            // } catch (e) {
+                // this.print("Error executing command:", e, command, args);
+            // }
+        } else {
+            this.print("Command not found:", command);
+        }
+    }
+
     handleInput(element) {
         this.inputElem.removeAttribute('active')
 
         const input = element.value.trim().toLowerCase();
-        const args = input.split(" ");
+        const [command, ...args] = input.split(" ");
         
-        console.log(args);
-
-        switch (args[0]) {
-            case "help":
-                this.addOutputLine("Available commands:");
-                this.addOutputLine("help - display this message");
-                this.addOutputLine("clear - clear the terminal");
-                break;
-
-            case "cls":
-            case "clear":
-                this._lines.forEach(line => line.remove());
-                this._lines = [];
-                break;
-
-            case "ls":
-                this.addOutputLine("index.html");
-                this.addOutputLine("about.html");
-                this.addOutputLine("projects.html");
-                this.addOutputLine("contact.html");
-                break;
-
-            case "whoami":
-                this.addOutputLine("Samuel Walls");
-                break;
-
-            case "echo":
-                this.addOutputLine(args.slice(1).join(" "));
-                break;
-
-            default:
-                this.addOutputLine("Command not found.");
-                break;
-        }
+        console.log(command, args);
+        this.executeCommand(command, args);
         
         this.inputElem = this.addLine("", this.path, this.user, true);
+    }
+
+    print(...args) {
+        this.addOutputLine(args.join(" "));
     }
 
     addOutputLine(text) {
@@ -95,14 +92,17 @@ class Terminal {
         if (this.enabled) line._inputElem.focus();
 
         const handleInput = e => {
+
             if (!this.enabled) {
                 e.stopPropagation();
                 e.preventDefault();
-                return;
-            }
 
-            if (e.code === "Enter" || e.key === "Enter") {
+            } else if (e.code === "Enter" || e.key === "Enter") {
+                
                 e.preventDefault();
+                if (!line._inputElem.innerText?.trim())
+                    return;               
+
                 this.handleInput(line);
             }
         }

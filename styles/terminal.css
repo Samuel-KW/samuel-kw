@@ -29,6 +29,10 @@
     height: 22px;
 }
 
+.terminal-text {
+    white-space: pre-wrap;
+}
+
 .terminal-control-btn {
     cursor: pointer;
     background-color: var(--terminal-controls);
