@@ -46,14 +46,11 @@ class AsciiImage extends HTMLElement {
     /*
         Optimized method to convert pixels to ASCII using bitwise operations and better chunk sampling
     */
-    async pixelsToAscii(pixelsUint8, width, height, speed) {
-
-        const fontSize = 8;
+    async pixelsToAscii(pixelsUint8, width, height, speed, fontSize=8) {
 
         // Set the font and color
         this._ctx.font = fontSize + "px consolas";
         this._ctx.fillStyle = this.color;
-        // this._ctx.letterSpacing = "0px";
 
         const pixels = new Uint32Array(pixelsUint8.buffer);
 
@@ -79,8 +76,9 @@ class AsciiImage extends HTMLElement {
         const rowDelta = speed / columnChunks;
 
         // Get the chunk's position
-        let chunkX = 0;
-        let chunkY = 0;
+        let chunkX = 0,
+            chunkY = 0;
+        
         let chars = "";
 
         // Loop through each chunk
