@@ -138,7 +138,7 @@ class Terminal {
         terminal.inputElem.type("help");
         await delay(1000)
         terminal.handleInput(terminal.inputElem);
-        terminal.inputElem._inputElem.focus()
+        // terminal.inputElem._inputElem.focus()
 
         terminal.enabled = true;
     });

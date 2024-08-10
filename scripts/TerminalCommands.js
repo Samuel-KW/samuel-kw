@@ -1,13 +1,12 @@
 class CommandHandler {
 
-
     constructor(print) {
         this.print = print;
 
         this.registerCommand(new HelpCommand(print));
     }
 
-    registerCommand(command) {
+    registerCommand(command={}) {
         this.commands[command.name] = command;
     }
 
@@ -59,7 +58,7 @@ class HelpCommand extends TerminalCommand {
             return;
         }
 
-        this.print("Samuel Walls, version 0.0.1-prerelease (2024-5-24)\nType `help' to see this list.\nType `help name' to find out more about the function `name'.\n\nAvailable commands:");
+        this.print("Samuel Walls, version 0.0.1-prerelease (2024-08-09)\nType `help' to see this list.\nType `help name' to find out more about the function `name'.\n\nAvailable commands:");
 
         for (const command in this.handler.commands)
             this.print(command, "\t", this.handler.commands[command].description);

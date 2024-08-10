@@ -166,7 +166,7 @@ class AsciiImage extends HTMLElement {
             }
 
             img {
-                transition: opacity 1s ease;
+                transition: opacity 1s ease-out;
                 z-index: 2;
                 opacity: 0;
             }
