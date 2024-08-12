@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette Demo</title>
+
+    <link rel="stylesheet" href="./src/components/variables.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text-primary);
+            padding: 20px;
+        }
+
+        h1, h2 {
+            color: var(--color-primary);
+        }
+
+        .color-box {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px var(--shadow-light);
+        }
+
+        .color-box:hover {
+            box-shadow: 0 6px 8px var(--shadow-medium);
+        }
+
+        .primary {
+            background-color: var(--color-primary);
+            color: var(--color-text-inverse);
+        }
+
+        .primary-hover {
+            background-color: var(--color-primary-hover);
+            color: var(--color-text-primary);
+        }
+
+        .secondary {
+            background-color: var(--color-secondary);
+            color: var(--color-text-inverse);
+        }
+
+        .secondary-hover {
+            background-color: var(--color-secondary-hover);
+            color: var(--color-text-inverse);
+        }
+
+        .background {
+            background-color: var(--color-background-secondary);
+        }
+
+        .text-primary {
+            color: var(--color-text-primary);
+        }
+
+        .text-secondary {
+            color: var(--color-text-secondary);
+        }
+
+        .border {
+            border: 2px solid var(--color-border-primary);
+            padding: 10px;
+        }
+
+        .accent {
+            background-color: var(--color-accent);
+            color: var(--color-text-primary);
+        }
+
+        .success {
+            background-color: var(--color-success);
+            color: var(--color-text-inverse);
+        }
+
+        .error {
+            background-color: var(--color-error);
+            color: var(--color-text-inverse);
+        }
+
+        .warning {
+            background-color: var(--color-warning);
+            color: var(--color-text-primary);
+        }
+
+        .button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .button-primary {
+            background-color: var(--color-primary);
+            color: var(--color-text-inverse);
+        }
+
+        .button-secondary {
+            background-color: var(--color-secondary);
+            color: var(--color-text-inverse);
+        }
+
+        .button-success {
+            background-color: var(--color-success);
+            color: var(--color-text-inverse);
+        }
+
+        .button-error {
+            background-color: var(--color-error);
+            color: var(--color-text-inverse);
+        }
+
+        .button-warning {
+            background-color: var(--color-warning);
+            color: var(--color-text-primary);
+        }
+    </style>
+</head>
+<body>
+    <h1>Color Palette Demo</h1>
+    <h2>Primary Colors</h2>
+    <div class="color-box primary">Primary Color</div>
+    <div class="color-box primary-hover">Primary Hover Color</div>
+    
+    <h2>Secondary Colors</h2>
+    <div class="color-box secondary">Secondary Color</div>
+    <div class="color-box secondary-hover">Secondary Hover Color</div>
+    
+    <h2>Backgrounds and Text</h2>
+    <div class="color-box background">Background Color</div>
+    <p class="text-primary">Primary Text Color</p>
+    <p class="text-secondary">Secondary Text Color</p>
+
+    <h2>Borders</h2>
+    <div class="color-box border">Border Color</div>
+    
+    <h2>Accent Colors</h2>
+    <div class="color-box accent">Accent Color</div>
+
+    <h2>State Colors</h2>
+    <div class="color-box success">Success Color</div>
+    <div class="color-box error">Error Color</div>
+    <div class="color-box warning">Warning Color</div>
+
+    <h2>Buttons</h2>
+    <button class="button button-primary">Primary Button</button>
+    <button class="button button-secondary">Secondary Button</button>
+    <button class="button button-success">Success Button</button>
+    <button class="button button-error">Error Button</button>
+    <button class="button button-warning">Warning Button</button>
+</body>
+</html>

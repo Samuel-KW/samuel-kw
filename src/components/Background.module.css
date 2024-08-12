@@ -1,0 +1,15 @@
+.bg {
+    top: 0; left: 0;
+    position: fixed;
+    user-select: none;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.bgOuter {
+    fill: var(--bg-path-outer);
+}
+
+.bgInner {
+    fill: var(--bg-path-inner);
+}

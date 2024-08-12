@@ -25,22 +25,6 @@ body {
     align-items: center;
 }
 
-.bg-path {
-    top: 0; left: 0;
-    position: fixed;
-    user-select: none;
-    pointer-events: none;
-    z-index: -1;
-}
-
-.bg-path-outer {
-    fill: var(--bg-path-outer);
-}
-
-.bg-path-inner {
-    fill: var(--bg-path-inner);
-}
-
 ::-webkit-scrollbar {
     background: transparent;
     width: 10px;
