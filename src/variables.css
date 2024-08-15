@@ -1,6 +1,20 @@
 :root {
     color-scheme: dark light;
 
+    /* Terminal Colors */
+    --terminal-header: #ACACAC;
+    --terminal-user: #FF38F8;
+    --terminal-path: #38DDFF;
+    --terminal-text: #DFDFDF;
+    --terminal-input: #f3f3f3;
+
+    --color-background-terminal: var(--color-dark-6);
+    --color-background-terminal-border: var(--color-dark-9);
+
+    --name-color: #FFBF00;
+    --progress-bg: #4E9D90;
+    --outline-color: #81dae0;
+
     /* Primary Colors */
     --color-primary: var(--color-grape-6);
     --color-primary-hover: var(--color-grape-3);
@@ -14,9 +28,9 @@
     --color-secondary-dark: var(--color-cyan-6);
 
     /* Background Colors */
-    --color-background: var(--color-dark-1);
-    --color-background-secondary: var(--color-dark-1);
-    --color-background-accent: var(--color-dark-2);
+    --color-background: var(--color-dark-7);
+    --color-background-secondary: var(--color-dark-2);
+    --color-background-accent: var(--color-dark-1);
 
     /* Text Colors */
     --color-text-primary: #222;
@@ -48,24 +62,7 @@
     --shadow-medium: rgba(0, 0, 0, 0.25);
     --shadow-dark: rgba(0, 0, 0, 0.5); 
 
-    --bg-color-main: #B7B7B7;
-    --bg-path-inner: #DFDFDF;
-    --bg-path-outer: #CCCCCC;
-
-    --terminal-bg: #000000;
-    --terminal-fg: #262626;
-    --terminal-controls: #414141;
-    --terminal-header: #ACACAC;
-
-    --terminal-user: #FF38F8;
-    --terminal-path: #38DDFF;
-    --terminal-text: #DFDFDF;
-    --terminal-input: #f3f3f3;
-
-    --name-color: #FFBF00;
-    --progress-bg: #4E9D90;
-    --outline-color: #81dae0;
-
+    /* Colors */
     --color-dark-0: #C9C9C9;
     --color-dark-1: #b8b8b8;
     --color-dark-2: #828282;
@@ -234,97 +231,12 @@
 
 @media (prefers-color-scheme: light) {
     :root {
-        --primary-color-contrast: var(--mantine-color-white);
-        --color-bright: var(--mantine-color-black);
-        --color-text: #000;
-        --color-body: #fff;
-        --color-error: var(--mantine-color-red-6);
-        --color-placeholder: var(--mantine-color-gray-5);
-        --color-anchor: var(--mantine-color-blue-6);
-        --color-default: var(--mantine-color-white);
-        --color-default-hover: var(--mantine-color-gray-0);
-        --color-default-color: var(--mantine-color-black);
-        --color-default-border: var(--mantine-color-gray-4);
-        --color-dimmed: var(--mantine-color-gray-6);
-        --color-dark-text: var(--mantine-color-dark-filled);
-        --color-dark-filled: var(--mantine-color-dark-6);
-        --color-dark-filled-hover: var(--mantine-color-dark-7);
-        --color-dark-light: rgba(46, 46, 46, 0.1);
-        --color-dark-light-hover: rgba(46, 46, 46, 0.12);
-        --color-dark-light-color: var(--mantine-color-dark-6);
-        --color-dark-outline: var(--mantine-color-dark-6);
-        --color-dark-outline-hover: rgba(46, 46, 46, 0.05);
+       
     }
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        /* Primary Colors */
-        --color-primary: var(--color-grape-4);
-        --color-primary-hover: var(--color-grape-5);
-        --color-primary-light: var(--color-grape-2);
-        --color-primary-dark: var(--color-grape-6);
-
-        /* Secondary Colors */
-        --color-secondary: #ffcc00; /* Amber, often used in retro terminals */
-        --color-secondary-hover: #ffd633; /* Brighter amber for hover states */
-        --color-secondary-light: #ffe066; /* Light amber for highlights */
-        --color-secondary-dark: #cc9900; /* Dark amber for contrast */
-
-        /* Background Colors */
-        --color-background: #1a1a1a; /* Deep charcoal for the main background */
-        --color-background-secondary: #111111; /* Near-black for secondary backgrounds */
-        --color-background-accent: #262626; /* Dark grey for accent backgrounds */
-
-        /* Text Colors */
-        --color-text-primary: #e0e0e0; /* Light grey for primary text */
-        --color-text-secondary: #a6a6a6; /* Mid-grey for secondary text */
-        --color-text-accent: #cccccc; /* Lighter grey for accents */
-        --color-text-inverse: #000000; /* Black text for contrast on light elements */
-
-        /* Border Colors */
-        --color-border-primary: #333333; /* Dark grey for primary borders */
-        --color-border-secondary: #444444; /* Slightly lighter grey for secondary borders */
-        --color-border-accent: #555555; /* Mid-grey for accent borders */
-
-        /* Accent Colors */
-        --color-accent: #00ffff; /* Cyan, modern touch inspired by tech aesthetics */
-        --color-accent-hover: #66ffff; /* Bright cyan for hover states */
-        --color-accent-light: #99ffff; /* Light cyan for highlights */
-        --color-accent-dark: #009999; /* Dark cyan for depth */
-
-        /* State Colors */
-        --color-success: #00ff00; /* Neon Green for success */
-        --color-success-hover: #33ff33; /* Brighter green for hover states */
-        --color-error: #ff0000; /* Bright Red for errors */
-        --color-error-hover: #ff3333; /* Lighter red for hover states */
-        --color-warning: #ffcc00; /* Amber for warnings */
-        --color-warning-hover: #ffd633; /* Brighter amber for hover states */
-
-        /* Shadows */
-        --shadow-light: rgba(255, 255, 255, 0.1); /* Subtle white shadow for depth */
-        --shadow-medium: rgba(0, 0, 0, 0.4); /* Darker shadow for strong depth */
-        --shadow-dark: rgba(0, 0, 0, 0.7); /* Intense shadow for dramatic depth */
-
-        --primary-color-contrast: var(--mantine-color-white);
-        --color-bright: var(--mantine-color-white);
-        --color-text: var(--mantine-color-dark-0);
-        --color-body: var(--mantine-color-dark-7);
-        --color-error: var(--mantine-color-red-8);
-        --color-placeholder: var(--mantine-color-dark-3);
-        --color-anchor: var(--mantine-color-blue-4);
-        --color-default: var(--mantine-color-dark-6);
-        --color-default-hover: var(--mantine-color-dark-5);
-        --color-default-color: var(--mantine-color-white);
-        --color-default-border: var(--mantine-color-dark-4);
-        --color-dimmed: var(--mantine-color-dark-2);
-        --color-dark-text: var(--mantine-color-dark-4);
-        --color-dark-filled: var(--mantine-color-dark-8);
-        --color-dark-filled-hover: var(--mantine-color-dark-9);
-        --color-dark-light: rgba(46, 46, 46, 0.15);
-        --color-dark-light-hover: rgba(46, 46, 46, 0.2);
-        --color-dark-light-color: var(--mantine-color-dark-3);
-        --color-dark-outline: var(--mantine-color-dark-4);
-        --color-dark-outline-hover: rgba(66, 66, 66, 0.05);
+        
     }
 }

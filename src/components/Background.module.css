@@ -9,11 +9,11 @@
 }
 
 .bgOuter {
-    fill: var(--bg-path-outer);
+    fill: var(--color-background-secondary);
 }
 
 .bgInner {
-    fill: var(--bg-path-inner);
+    fill: var(--color-background-accent);
 }
 
 /* Mobile devices */
