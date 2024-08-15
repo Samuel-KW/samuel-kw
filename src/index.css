@@ -1,13 +1,68 @@
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+html, body, #root {
+  margin: 0; padding: 0;
+  height: 100%;
+  width: 100%; 
+}
+
+html {
+  box-sizing: border-box;
+  overflow: hidden;
+  font-size: 62.5%;
+}
+
 body {
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 1.6rem;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Reset */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  background: transparent;
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(121, 121, 121); 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(66, 66, 66); 
+}
+
+/* Helper classes */
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
