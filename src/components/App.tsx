@@ -1,3 +1,4 @@
+import "./variables.css";
 import Background from "./Background";
 
 export default function App() {
