@@ -1,0 +1,28 @@
+.line {
+    color: var(--terminal-text);
+    font-family: consolas, monospace;
+    font-size: 1em;
+    white-space: pre-wrap;
+}
+
+.user, .directory {
+    user-select: none;
+}
+
+.user {
+    color: var(--terminal-user);
+}
+
+.user::after {
+    color: var(--terminal-other);
+    content: "@";
+}
+
+.directory {
+    color: var(--terminal-directory);
+}
+
+.directory::after {
+    color: var(--terminal-other);
+    content: "> ";
+}

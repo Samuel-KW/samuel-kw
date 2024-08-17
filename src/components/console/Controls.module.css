@@ -1,0 +1,30 @@
+.close, .minimize, .expand {
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 50%;
+    margin: 0 3px;
+    width: 13px;
+    height: 13px;
+}
+
+.close {
+    background-color: var(--color-red-7);
+}
+
+.minimize {
+    background-color: var(--color-yellow-7);
+}
+
+.expand {
+    background-color: var(--color-green-7);
+}
+
+
+/* For mobile devices */
+@media only screen and (max-width: 700px) {
+    .controls > * {            
+        width: 30px;
+        height: 30px;
+        margin: 0 10px;
+    }
+}

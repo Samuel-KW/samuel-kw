@@ -4,7 +4,8 @@
     /* Terminal Colors */
     --terminal-header: #ACACAC;
     --terminal-user: #FF38F8;
-    --terminal-path: #38DDFF;
+    --terminal-directory: #38DDFF;
+    --terminal-other: #989797;
     --terminal-text: #DFDFDF;
     --terminal-input: #f3f3f3;
 
