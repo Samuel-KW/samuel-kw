@@ -73,6 +73,7 @@ export default function Terminal (_props: Partial<TerminalProps>) {
                 <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
                 <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
                 <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
+                
                 {/* <ascii-img src="../images/day 3.webp" width="1920" height="1080" scale=".25" color="#ffffff" alt="Cinematic picture of a field of dandylions against a snow-capped mountain range."></ascii-img> */}
             </div>
         </div>

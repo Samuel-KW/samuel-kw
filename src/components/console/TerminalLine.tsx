@@ -2,14 +2,14 @@
 import styles from "./TerminalLine.module.css";
 
 export interface TerminalLineProps {
-	user: string;
-	directory: string;
-	content: string;
+	user?: string;
+	directory?: string;
+	content?: string;
 
-	children: string | JSX.Element;
+	children?: string | JSX.Element;
 }
 
-export default function TerminalLine (_props: Partial<TerminalLineProps>) {
+export default function TerminalLine (_props: TerminalLineProps) {
 
 	const { user, directory, content, children } = _props;
 
