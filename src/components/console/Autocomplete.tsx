@@ -1,3 +1,5 @@
+
+// TODO: Allow tabbing through the list
 export default function autoComplete(input: string, phrases: string[]): string | null {
     
     // Convert the input to lowercase for case-insensitive comparison
