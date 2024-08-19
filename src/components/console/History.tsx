@@ -16,18 +16,20 @@
  * console.log(terminalHistory.getHistoryState());    // Output: []
  */
 export default class History {
-    private history: string[];
-    private currentIndex: number;
-    private currentInput: string;
+    private history: string[] = [];
+    private currentIndex: number = -1;
+    private currentInput: string = "";
 
-    constructor() {
-        this.history = [];
-        this.currentIndex = -1;
-        this.currentInput = "";
-    }
+    private maxHistoryLength: number = 10;
+
+    constructor() {}
 
     // Adds a command to the history
     addCommand(command: string): void {
+
+        if (this.history.length >= this.maxHistoryLength)
+            this.history.shift();
+
         command = command.trim();
 
         if (command) {
