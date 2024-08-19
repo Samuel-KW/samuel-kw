@@ -1,6 +1,7 @@
 import styles from "./TerminalInput.module.css";
 import lineStyles from "./TerminalLine.module.css";
-
+import History from "./History";
+import autoComplete from "./Autocomplete";
 
 export interface TerminalInput {
 
@@ -14,16 +15,61 @@ export interface TerminalInput {
 export default function TerminalInput (_props: TerminalInput) {
 
     const { user, directory, value } = _props;
+    const history = new History();
+
+    let recommendation: string | null = null;
 
     const onKeyDown = (event: React.KeyboardEvent) => {
 
-        if (event.key === "Enter") {
+        const command = (event.currentTarget.textContent ?? "").trim();
 
-            event.preventDefault();
+        // Autocomplete commands
+        if (command.length > 2) {
+            recommendation = autoComplete(command, history.getHistoryState());
+        }
 
-            if (_props.onSubmit)
-                _props.onSubmit(event?.currentTarget?.textContent);
-            }
+        // TODO: Allow custom keyboard shortcuts
+        // TODO: Cache current input when up and down arrows are pressed
+        switch (event.key) {
+
+            // Autocomplete commands
+            case "Tab":
+                if (event.shiftKey || !recommendation) break;
+
+                event.preventDefault();
+                event.currentTarget.textContent = recommendation;
+
+                break;
+
+            // Submit command
+            case "Enter":
+                if (event.shiftKey) break;
+            
+                event.preventDefault();
+                history.addCommand(command);
+
+                if (_props.onSubmit)
+                    _props.onSubmit(command);
+    
+                event.currentTarget.textContent = "";
+                break;
+
+            // Navigate previous history
+            case "ArrowUp":
+                if (event.shiftKey) break;
+
+                event.preventDefault();
+                event.currentTarget.textContent = history.getPreviousCommand();
+                break;
+
+            // Navigate next history
+            case "ArrowDown":
+                if (event.shiftKey) break;
+
+                event.preventDefault();
+                event.currentTarget.textContent = history.getNextCommand();
+
+                break;
         }
     };
 
