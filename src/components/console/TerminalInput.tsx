@@ -22,11 +22,10 @@ export default function TerminalInput (_props: TerminalInput) {
     const onKeyDown = (event: React.KeyboardEvent) => {
 
         const command = (event.currentTarget.textContent ?? "").trim();
-
+        
         // Autocomplete commands
-        if (command.length > 2) {
+        if (command.length >= 1)
             recommendation = autoComplete(command, history.getHistoryState());
-        }
 
         // TODO: Allow custom keyboard shortcuts
         // TODO: Cache current input when up and down arrows are pressed
@@ -34,11 +33,10 @@ export default function TerminalInput (_props: TerminalInput) {
 
             // Autocomplete commands
             case "Tab":
+                event.preventDefault();
                 if (event.shiftKey || !recommendation) break;
 
-                event.preventDefault();
                 event.currentTarget.textContent = recommendation;
-
                 break;
 
             // Submit command
