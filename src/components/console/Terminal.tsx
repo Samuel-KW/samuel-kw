@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Minimize, Expand, Close } from "./Controls";
 import styles from "./Terminal.module.css";
 import TerminalLine from "./TerminalLine";
+import TerminalInput from "./TerminalInput";
 
 export interface Terminal {
 
@@ -76,6 +77,8 @@ export default function Terminal (_props: Partial<TerminalProps>) {
                 
                 {/* <ascii-img src="../images/day 3.webp" width="1920" height="1080" scale=".25" color="#ffffff" alt="Cinematic picture of a field of dandylions against a snow-capped mountain range."></ascii-img> */}
             </div>
+
+            <TerminalInput user="admin" directory={window.location.pathname} onSubmit={console.log}/>
         </div>
     </div>
 }
