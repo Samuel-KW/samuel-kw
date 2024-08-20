@@ -4,6 +4,7 @@ import { Minimize, Expand, Close } from "./Controls";
 import styles from "./Terminal.module.css";
 import TerminalLine from "./TerminalLine";
 import TerminalInput from "./TerminalInput";
+import Welcome from "./commands/welcome";
 
 export interface Terminal {
 
@@ -40,7 +41,7 @@ export default function Terminal (_props: Partial<TerminalProps>) {
     const [maximized, setMaximized] = useState(false);
     const [minimized, setMinimized] = useState(false);
 
-    return <div className={styles.terminal + " " + (maximized ? styles.maximized : "") + " " + (minimized ? styles.minimized : "")} style={{ opacity: opened ? 1 : 0 }}>
+    return <div className={styles.terminal + " " + (maximized ? styles.maximized : "") + " " + (minimized ? styles.minimized : "")} style={{ opacity: opened ? 1 : 0 }} role="window" aria-label="Terminal window">
         <div className={styles.bar}>
             <span className={styles.header}>Portfolio - Samuel Walls</span>
             <span className={styles.controls}>
@@ -52,33 +53,11 @@ export default function Terminal (_props: Partial<TerminalProps>) {
 
         <div className={styles.body}>
             <div className={styles.content}>
+                <Welcome />
                 <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
-                <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
-                <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
-                <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
-                <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
-                <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
-                <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
-                <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
-                <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
-                <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
-                <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
-                <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
-                <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
-                <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
-                <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
-                <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
-                <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
-                <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
-                <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
-                <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
-                <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
-                <TerminalLine user="admin" directory={window.location.pathname}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
-                
+                <TerminalInput user="admin" directory={window.location.pathname} onSubmit={console.log}/>
                 {/* <ascii-img src="../images/day 3.webp" width="1920" height="1080" scale=".25" color="#ffffff" alt="Cinematic picture of a field of dandylions against a snow-capped mountain range."></ascii-img> */}
             </div>
-
-            <TerminalInput user="admin" directory={window.location.pathname} onSubmit={console.log}/>
         </div>
     </div>
 }
