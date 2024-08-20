@@ -1,0 +1,29 @@
+.highlight {
+    color: var(--color-green-7);
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.link {
+    color: var(--color-blue-4);
+    text-decoration: underline;
+}
+
+.link:hover {
+    color: var(--color-blue-3);
+}
+
+.link:active {
+    color: var(--color-blue-5);
+}
+
