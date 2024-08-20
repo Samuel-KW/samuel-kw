@@ -33,8 +33,8 @@ export default function TerminalInput (_props: TerminalInput) {
 
             // Autocomplete commands
             case "Tab":
-                event.preventDefault();
                 if (event.shiftKey || !recommendation) break;
+                event.preventDefault();
 
                 event.currentTarget.textContent = recommendation;
                 break;
@@ -71,7 +71,8 @@ export default function TerminalInput (_props: TerminalInput) {
         }
     };
 
-    return <div className={styles.input}>
+    // Focus input when clicked
+    return <div onClick={e => (e.currentTarget.querySelector("[contentEditable]") as HTMLSpanElement)?.focus()}>
         <span className={lineStyles.user}>{user}</span>
         <span className={lineStyles.directory}>{directory}</span>
         <span contentEditable={true} className={styles.input} onKeyDown={onKeyDown}>{value}</span>
