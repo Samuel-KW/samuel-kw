@@ -33,8 +33,8 @@ export default function TerminalInput (_props: TerminalInput) {
 
             // Autocomplete commands
             case "Tab":
-                if (event.shiftKey || !recommendation) break;
                 event.preventDefault();
+                if (event.shiftKey || !recommendation) break;
 
                 event.currentTarget.textContent = recommendation;
                 break;
