@@ -30,7 +30,7 @@ export default function TerminalInput (_props: TerminalInput) {
         if (command.length >= 1)
             recommendation = autoComplete(command, history.getHistoryState());
         
-
+ 
         // TODO: Allow custom keyboard shortcuts
         // TODO: Cache current input when up and down arrows are pressed
         switch (event.key) {
@@ -86,6 +86,13 @@ export default function TerminalInput (_props: TerminalInput) {
                 } else {
                     sound.error();
                 }
+
+                break;
+
+            default:
+
+                // Allow typical keys to play typing sound
+                if (event.key.length == 1) sound.type();
 
                 break;
         }
