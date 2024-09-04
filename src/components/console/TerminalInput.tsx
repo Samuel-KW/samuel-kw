@@ -2,6 +2,9 @@ import styles from "./TerminalInput.module.css";
 import lineStyles from "./TerminalLine.module.css";
 import History from "./History";
 import autoComplete from "./Autocomplete";
+import { sound } from "../audio";
+
+
 
 export interface TerminalInput {
 
@@ -26,6 +29,7 @@ export default function TerminalInput (_props: TerminalInput) {
         // Autocomplete commands
         if (command.length >= 1)
             recommendation = autoComplete(command, history.getHistoryState());
+        
 
         // TODO: Allow custom keyboard shortcuts
         // TODO: Cache current input when up and down arrows are pressed
@@ -37,6 +41,8 @@ export default function TerminalInput (_props: TerminalInput) {
                 if (event.shiftKey || !recommendation) break;
 
                 event.currentTarget.textContent = recommendation;
+                sound.type();
+
                 break;
 
             // Submit command
@@ -57,7 +63,14 @@ export default function TerminalInput (_props: TerminalInput) {
                 if (event.shiftKey) break;
 
                 event.preventDefault();
-                event.currentTarget.textContent = history.getPreviousCommand();
+                
+                const prevCmd = history.getPreviousCommand();
+                if (prevCmd) {
+                    event.currentTarget.textContent = prevCmd;
+                    sound.interact();
+                } else {
+                    sound.error();
+                }
                 break;
 
             // Navigate next history
@@ -65,7 +78,14 @@ export default function TerminalInput (_props: TerminalInput) {
                 if (event.shiftKey) break;
 
                 event.preventDefault();
-                event.currentTarget.textContent = history.getNextCommand();
+
+                const nextCmd = history.getNextCommand();
+                if (nextCmd) {
+                    event.currentTarget.textContent = nextCmd;
+                    sound.interact();
+                } else {
+                    sound.error();
+                }
 
                 break;
         }
