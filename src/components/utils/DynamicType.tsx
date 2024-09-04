@@ -1,4 +1,5 @@
 import React from "react";
+import { sound } from "../audio";
 
 const delay = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -24,10 +25,12 @@ const delay = (ms: number): Promise<void> => new Promise(resolve => setTimeout(r
 export default class Typer {
     element: React.RefObject<HTMLElement>;
     chars: string;
+    playSound: boolean;
 
     constructor(element: React.RefObject<HTMLElement>) {
         this.element = element;
         this.chars = "qwertyuiopasdfghjklzxcvbnm";
+        this.playSound = false;
     }
 
     /**
@@ -36,6 +39,7 @@ export default class Typer {
      * @param speed How fast to type each character in MS
      * @param error Chance of making an error
      * @param wait Delay in MS between phrases
+     * @param sound Play sound when typing
      * @returns 
      */
     async startTyping(
@@ -84,6 +88,7 @@ export default class Typer {
         const isMistake = Math.random() < error;
 
         if (this.element.current) {
+            sound.type();
             this.element.current.textContent += isMistake
                 ? this.chars[Math.floor(Math.random() * this.chars.length)]
                 : char;
@@ -104,6 +109,7 @@ export default class Typer {
      */
     deleteCharacter() {
         if (this.element.current) {
+            sound.type();
             this.element.current.textContent = this.element.current.textContent?.slice(0, -1) ?? "";
         }
     }
