@@ -3,78 +3,111 @@ import lineStyles from "./TerminalLine.module.css";
 import History from "./History";
 import autoComplete from "./Autocomplete";
 
-export interface TerminalInput {
+export function setCursorToEnd(contentEditableElement: HTMLElement) {
 
-    user: string;
-	directory: string;
-    value?: string;
+	// Focus on the contenteditable element
+	contentEditableElement.focus();
 
-    onSubmit?: (value: string) => void;
+	// Create a new Range object
+	const range = document.createRange();
+
+	// Select the last child node and set the range to the end of it
+	range.selectNodeContents(contentEditableElement);
+	range.collapse(false); // Collapse the range to the end
+
+	// Get the current Selection
+	const selection = window.getSelection();
+	if (!selection) return;
+
+	// Clear any existing selections
+	selection.removeAllRanges();
+
+	// Add the new range
+	selection.addRange(range);
 }
 
-export default function TerminalInput (_props: TerminalInput) {
+export interface TerminalInput {
 
-    const { user, directory, value } = _props;
-    const history = new History();
+	user: string;
+	directory: string;
+	value?: string;
 
-    let recommendation: string | null = null;
+	onSubmit?: (value: string) => void;
+}
 
-    const onKeyDown = (event: React.KeyboardEvent) => {
+export default function TerminalInput(_props: TerminalInput) {
 
-        const command = (event.currentTarget.textContent ?? "").trim();
-        
-        // Autocomplete commands
-        if (command.length >= 1)
-            recommendation = autoComplete(command, history.getHistoryState());
+	const { user, directory, value } = _props;
+	const history = new History();
 
-        // TODO: Allow custom keyboard shortcuts
-        // TODO: Cache current input when up and down arrows are pressed
-        switch (event.key) {
+	let recommendation: string | null = null;
 
-            // Autocomplete commands
-            case "Tab":
-                if (event.shiftKey || !recommendation) break;
-                event.preventDefault();
+	const onKeyDown = (event: React.KeyboardEvent) => {
 
-                event.currentTarget.textContent = recommendation;
-                break;
+		const val = event.currentTarget.textContent ?? "";
+		const command = val.trim();
 
-            // Submit command
-            case "Enter":
-                if (event.shiftKey) break;
-            
-                event.preventDefault();
-                history.addCommand(command);
+		// Autocomplete commands
+		recommendation = autoComplete(command, history.getHistoryState());
 
-                if (_props.onSubmit)
-                    _props.onSubmit(command);
-    
-                event.currentTarget.textContent = "";
-                break;
+		// TODO: Allow custom keyboard shortcuts
+		// TODO: Cache current input when up and down arrows are pressed
+		switch (event.key) {
 
-            // Navigate previous history
-            case "ArrowUp":
-                if (event.shiftKey) break;
+			// Autocomplete commands
+			case "Tab":
+				if (event.shiftKey || !recommendation) break;
+				event.preventDefault();
 
-                event.preventDefault();
-                event.currentTarget.textContent = history.getPreviousCommand();
-                break;
+				event.currentTarget.textContent = recommendation;
+				setCursorToEnd(event.currentTarget as HTMLElement);
+				recommendation = null;
+				break;
 
-            // Navigate next history
-            case "ArrowDown":
-                if (event.shiftKey) break;
+			// Submit command
+			case "Enter":
+				if (event.shiftKey) break;
 
-                event.preventDefault();
-                event.currentTarget.textContent = history.getNextCommand();
+				event.preventDefault();
+				history.addCommand(command);
 
-                break;
-        }
-    };
+				if (_props.onSubmit)
+					_props.onSubmit(command);
 
-    // Focus input when clicked
-    return <div onClick={e => (e.currentTarget.querySelector("[contentEditable]") as HTMLSpanElement)?.focus()}>
-        <span className={lineStyles.user}>{user}</span>
-        <span className={lineStyles.directory}>{directory}</span>
-        <span contentEditable={true} className={styles.input} onKeyDown={onKeyDown}>{value}</span>
-    </div>
+				event.currentTarget.textContent = "";
+				break;
+
+			// Navigate previous history
+			case "ArrowUp":
+				if (event.shiftKey) break;
+
+				event.preventDefault();
+				event.currentTarget.textContent = history.getPreviousCommand();
+				break;
+
+			// Navigate next history
+			case "ArrowDown":
+				if (event.shiftKey) break;
+
+				event.preventDefault();
+				event.currentTarget.textContent = history.getNextCommand();
+
+				break;
+		}
+		
+		// Update autocomplete
+		const hint = (recommendation ?? "").slice(val.length + 1);
+		console.log(command, hint);
+		event.currentTarget.setAttribute(
+			"data-autocomplete",
+			hint
+		);
+	};
+
+	// Focus input when clicked
+	return <div onClick={e => (e.currentTarget.querySelector("[contentEditable]") as HTMLSpanElement)?.focus()}>
+		<span className={lineStyles.user}>{user}</span>
+		<span className={lineStyles.directory}>{directory}</span>
+		<span contentEditable={true} className={styles.input} onKeyDown={onKeyDown}>{value}</span>
+	</div>
 }

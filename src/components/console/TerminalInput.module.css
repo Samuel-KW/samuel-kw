@@ -14,11 +14,20 @@
 .input {
     outline: none;
 
+    &::after {
+        border: none;
+        display: inline-block;
+        vertical-align: bottom;
+        opacity: 0.5;
+        content: attr(data-autocomplete);
+    }
+
+    /* 
     &:focus::after {
         animation: blink 1s step-end infinite;
         border: none;
-        display: inline;
+        display: inline-block;
         vertical-align: bottom;
         content: "_";
-    }
+    } */
 }
