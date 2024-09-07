@@ -1,3 +1,4 @@
+import { sound } from "../audio";
 import styles from "./Controls.module.css";
 
 interface ControlProps {
@@ -18,6 +19,7 @@ export const handleUse = (fn = () => {}) => {
             (event as React.MouseEvent).button === 0
         ) {
             event.preventDefault();
+            sound.click();
             fn();
         }
     }

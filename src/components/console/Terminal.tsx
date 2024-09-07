@@ -49,6 +49,7 @@ export default function Terminal (_props: Partial<TerminalProps>) {
     useEffect(() => {
         if (!typerRef.current) {
             typerRef.current = new Typer(typingElement);
+            typerRef.current.playSound = true;
             typerRef.current.startTyping(['Hello, World!', 'TypeScript is awesome!']);
         }
     }, []);
@@ -66,7 +67,7 @@ export default function Terminal (_props: Partial<TerminalProps>) {
         <div className={styles.body}>
             <div className={styles.content}>
                 <Welcome />
-                <TerminalLine user="admin" directory={window.location.pathname} reference={typingElement}>Lorum ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</TerminalLine>
+                <TerminalLine user="admin" directory={window.location.pathname} reference={typingElement}>Welcome to my website!</TerminalLine>
                 <TerminalInput user="admin" directory={window.location.pathname} onSubmit={console.log}/>
                 {/* <ascii-img src="../images/day 3.webp" width="1920" height="1080" scale=".25" color="#ffffff" alt="Cinematic picture of a field of dandylions against a snow-capped mountain range."></ascii-img> */}
             </div>

@@ -2,6 +2,9 @@ import styles from "./TerminalInput.module.css";
 import lineStyles from "./TerminalLine.module.css";
 import History from "./History";
 import autoComplete from "./Autocomplete";
+import { sound } from "../audio";
+
+
 
 export function setCursorToEnd(contentEditableElement: HTMLElement) {
 
@@ -46,10 +49,11 @@ export default function TerminalInput(_props: TerminalInput) {
 
 		const val = event.currentTarget.textContent ?? "";
 		const command = val.trim();
-
-		// Autocomplete commands
-		recommendation = autoComplete(command, history.getHistoryState());
-
+        
+        // Autocomplete commands
+        if (command.length >= 1)
+            recommendation = autoComplete(command, history.getHistoryState());
+ 
 		// TODO: Allow custom keyboard shortcuts
 		// TODO: Cache current input when up and down arrows are pressed
 		switch (event.key) {
@@ -59,17 +63,37 @@ export default function TerminalInput(_props: TerminalInput) {
 				if (event.shiftKey || !recommendation) break;
 				event.preventDefault();
 
-				event.currentTarget.textContent = recommendation;
-				setCursorToEnd(event.currentTarget as HTMLElement);
-				recommendation = null;
+				const prevCmd = history.getPreviousCommand();
+				if (prevCmd) {
+					event.currentTarget.textContent = prevCmd;
+					setCursorToEnd(event.currentTarget as HTMLElement);
+					sound.interact();
+				} else {
+					sound.error();
+				}
 				break;
 
 			// Submit command
 			case "Enter":
 				if (event.shiftKey) break;
 
-				event.preventDefault();
+                event.preventDefault();
 				history.addCommand(command);
+
+                const nextCmd = history.getNextCommand();
+                if (nextCmd) {
+                    event.currentTarget.textContent = nextCmd;
+                    sound.interact();
+                } else {
+                    sound.error();
+                }
+
+                break;
+
+            default:
+
+                // Allow typical keys to play typing sound
+                if (event.key.length == 1) sound.type();
 
 				if (_props.onSubmit)
 					_props.onSubmit(command);

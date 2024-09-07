@@ -22,12 +22,12 @@
         user-select: none;
         height: 23px;
         margin-bottom: 5px;
+        line-height: 1.5;
     }
 
     .header {
         color: var(--terminal-header);
         padding: 0 5px;
-        line-height: 1.5;
         height: 22px;
         
         pointer-events: none;
@@ -82,6 +82,7 @@
         .bar {
             height: 40px;
             font-size: 1.25em;
+            line-height: 1.2;
         }
     }
 }
