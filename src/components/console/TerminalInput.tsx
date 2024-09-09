@@ -45,15 +45,29 @@ export default function TerminalInput(_props: TerminalInput) {
 
 	let recommendation: string | null = null;
 
+	
+
 	const onKeyDown = (event: React.KeyboardEvent) => {
 
+		const isChar = event.key.length === 1;
+
 		const val = event.currentTarget.textContent ?? "";
-		const command = val.trim();
-        
-        // Autocomplete commands
-        if (command.length >= 1)
+		const command = isChar ? val + event.key : val;
+
+		// Autocomplete commands
+        if (command.length > 0 && isChar)
             recommendation = autoComplete(command, history.getHistoryState());
- 
+		
+		// // Update autocomplete
+		// // Assume alphanumeric characters
+		// if (event.key.length === 1) {
+		// 	const str = (command ?? "") + event.key;
+		// 	const hint = str.slice(val.length);
+		// 	console.log(command, "-", hint);
+		// }
+		const hint = recommendation ? recommendation.slice(command.length) : "";
+		event.currentTarget.setAttribute("data-autocomplete", hint);
+
 		// TODO: Allow custom keyboard shortcuts
 		// TODO: Cache current input when up and down arrows are pressed
 		switch (event.key) {
@@ -63,14 +77,14 @@ export default function TerminalInput(_props: TerminalInput) {
 				if (event.shiftKey || !recommendation) break;
 				event.preventDefault();
 
-				const prevCmd = history.getPreviousCommand();
-				if (prevCmd) {
-					event.currentTarget.textContent = prevCmd;
-					setCursorToEnd(event.currentTarget as HTMLElement);
-					sound.interact();
-				} else {
-					sound.error();
-				}
+				event.currentTarget.textContent = recommendation;
+				
+				// Clear the autocomplete
+				recommendation = null;
+				event.currentTarget.setAttribute("data-autocomplete", "");
+
+				setCursorToEnd(event.currentTarget as HTMLElement);
+
 				break;
 
 			// Submit command
@@ -80,33 +94,27 @@ export default function TerminalInput(_props: TerminalInput) {
                 event.preventDefault();
 				history.addCommand(command);
 
-                const nextCmd = history.getNextCommand();
-                if (nextCmd) {
-                    event.currentTarget.textContent = nextCmd;
-                    sound.interact();
-                } else {
-                    sound.error();
-                }
-
-                break;
-
-            default:
-
-                // Allow typical keys to play typing sound
-                if (event.key.length == 1) sound.type();
-
 				if (_props.onSubmit)
 					_props.onSubmit(command);
 
 				event.currentTarget.textContent = "";
-				break;
+
+                break;
 
 			// Navigate previous history
 			case "ArrowUp":
 				if (event.shiftKey) break;
 
 				event.preventDefault();
-				event.currentTarget.textContent = history.getPreviousCommand();
+
+				const prevCmd = history.getPreviousCommand();
+                if (prevCmd) {
+                    event.currentTarget.textContent = prevCmd;
+                    sound.interact();
+                } else {
+                    sound.error();
+                }
+				
 				break;
 
 			// Navigate next history
@@ -114,18 +122,24 @@ export default function TerminalInput(_props: TerminalInput) {
 				if (event.shiftKey) break;
 
 				event.preventDefault();
-				event.currentTarget.textContent = history.getNextCommand();
+
+				const nextCmd = history.getNextCommand();
+                if (nextCmd) {
+                    event.currentTarget.textContent = nextCmd;
+                    sound.interact();
+                } else {
+                    sound.error();
+                }
+
+				break;
+
+			default:
+
+                // Allow typical keys to play typing sound
+                if (isChar) sound.type();
 
 				break;
 		}
-		
-		// Update autocomplete
-		const hint = (recommendation ?? "").slice(val.length + 1);
-		console.log(command, hint);
-		event.currentTarget.setAttribute(
-			"data-autocomplete",
-			hint
-		);
 	};
 
 	// Focus input when clicked
