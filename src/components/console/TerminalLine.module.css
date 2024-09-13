@@ -24,5 +24,6 @@
 
 .directory::after {
     color: var(--terminal-other);
-    content: "> ";
+    content: ">";
+    margin-right: 0.5em;
 }
