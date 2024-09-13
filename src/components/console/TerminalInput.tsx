@@ -43,41 +43,29 @@ export default function TerminalInput(_props: TerminalInput) {
 	const { user, directory, value } = _props;
 	const history = new History();
 
-	let recommendation: string | null = null;
+	let recommendation: string | null = "help";
 
-	
-
-	const onKeyDown = (event: React.KeyboardEvent) => {
+	const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
 
 		const isChar = event.key.length === 1;
 
-		const val = event.currentTarget.textContent ?? "";
+		const val = event.currentTarget.value;
 		const command = isChar ? val + event.key : val;
-
-		// Autocomplete commands
-        if (command.length > 0 && isChar)
-            recommendation = autoComplete(command, history.getHistoryState());
-		
-		// // Update autocomplete
-		// // Assume alphanumeric characters
-		// if (event.key.length === 1) {
-		// 	const str = (command ?? "") + event.key;
-		// 	const hint = str.slice(val.length);
-		// 	console.log(command, "-", hint);
-		// }
-		const hint = recommendation ? recommendation.slice(command.length) : "";
-		event.currentTarget.setAttribute("data-autocomplete", hint);
 
 		// TODO: Allow custom keyboard shortcuts
 		// TODO: Cache current input when up and down arrows are pressed
 		switch (event.key) {
 
+			case "Escape":
+				event.currentTarget.blur();
+				break; 
+
 			// Autocomplete commands
 			case "Tab":
-				if (event.shiftKey || !recommendation) break;
 				event.preventDefault();
+				if (event.shiftKey || !recommendation) break;
 
-				event.currentTarget.textContent = recommendation;
+				event.currentTarget.value = recommendation;
 				
 				// Clear the autocomplete
 				recommendation = null;
@@ -97,7 +85,7 @@ export default function TerminalInput(_props: TerminalInput) {
 				if (_props.onSubmit)
 					_props.onSubmit(command);
 
-				event.currentTarget.textContent = "";
+				event.currentTarget.value = "";
 
                 break;
 
@@ -109,7 +97,7 @@ export default function TerminalInput(_props: TerminalInput) {
 
 				const prevCmd = history.getPreviousCommand();
                 if (prevCmd) {
-                    event.currentTarget.textContent = prevCmd;
+                    event.currentTarget.value = prevCmd;
                     sound.interact();
                 } else {
                     sound.error();
@@ -125,7 +113,7 @@ export default function TerminalInput(_props: TerminalInput) {
 
 				const nextCmd = history.getNextCommand();
                 if (nextCmd) {
-                    event.currentTarget.textContent = nextCmd;
+                    event.currentTarget.value = nextCmd;
                     sound.interact();
                 } else {
                     sound.error();
@@ -140,12 +128,26 @@ export default function TerminalInput(_props: TerminalInput) {
 
 				break;
 		}
+		
+	};
+
+	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+		const command = event.currentTarget.value.trim();
+
+		// Autocomplete commands
+		recommendation = command.length < 1 ? null: autoComplete(command, history.getHistoryState());
+		
+		const hint = recommendation ? recommendation.slice(command.length) : "";
+		event.currentTarget.setAttribute("data-autocomplete", hint);
 	};
 
 	// Focus input when clicked
-	return <div onClick={e => (e.currentTarget.querySelector("[contentEditable]") as HTMLSpanElement)?.focus()}>
-		<span className={lineStyles.user}>{user}</span>
-		<span className={lineStyles.directory}>{directory}</span>
-		<span contentEditable={true} className={styles.input} onKeyDown={onKeyDown}>{value}</span>
+	return <div onClick={e => (e.currentTarget.querySelector("input") as HTMLInputElement).focus()} className={styles.line}>
+		<label className={styles.desc}>
+			<span className={lineStyles.user}>{user}</span>
+			<span className={lineStyles.directory}>{directory}</span>
+		</label>
+		<input className={styles.input} onChange={onChange} onKeyDown={onKeyDown} autoComplete="off" spellCheck="false" autoCapitalize="off">{value}</input>
 	</div>
 }

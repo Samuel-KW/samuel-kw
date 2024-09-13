@@ -11,8 +11,32 @@
     }
 }
 
+/* Command line container */
+.line {
+    max-width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+/* Command line container for user and path */
+.desc {
+    display: block;
+
+}
+
+/* Command line text input */
 .input {
     outline: none;
+    display: block;
+    width: 100%;
+    border: none;
+    padding: 0;
+    background-color: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: inherit;
+
 
     &::after {
         border: none;
