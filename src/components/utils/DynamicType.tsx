@@ -1,5 +1,5 @@
 import React from "react";
-import { sound } from "../audio";
+import { sound } from "../Audio";
 
 const delay = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
 

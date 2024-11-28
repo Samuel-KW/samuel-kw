@@ -2,7 +2,7 @@ import styles from "./TerminalInput.module.css";
 import lineStyles from "./TerminalLine.module.css";
 import History from "./History";
 import autoComplete from "./Autocomplete";
-import { sound } from "../audio";
+import { sound } from "../Audio";
 
 
 

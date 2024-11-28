@@ -8,6 +8,8 @@ const words = ['5+ years using python', 'ui/ux design', 'software development', 
 export default function App() {
     return (
         <>
+
+
             <div id="content" style={{height: "100%"}} className="center">
                 <Terminal />
             </div>

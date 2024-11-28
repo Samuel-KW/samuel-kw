@@ -1,4 +1,4 @@
-import { sound } from "../audio";
+import { sound } from "../Audio";
 import styles from "./Controls.module.css";
 
 interface ControlProps {
