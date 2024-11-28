@@ -59,22 +59,24 @@ export default function Terminal (_props: Partial<TerminalProps>) {
         Draggable({ containerRef: dragElement, dragItemRef: dragBar });
     }, []);
 
-    return <div ref={dragElement} className={styles.terminal} style={{ opacity: opened ? 1 : 0 }} role="window" aria-label="Terminal window">
-        <div ref={dragBar} className={styles.bar}>
-            <span className={styles.header}>Portfolio - Samuel Walls</span>
-            <span className={styles.controls}>
-                <Minimize onClick={() => setMinimized(!minimized)} />
-                <Expand onClick={() => setMaximized(!maximized)} />
-                <Close onClick={() => setOpened(false)} />
-            </span>
-        </div>
+    return <div ref={dragElement}>
+        <div className={styles.terminal} style={{ opacity: opened ? 1 : 0 }} role="window" aria-label="Terminal window">
+            <div ref={dragBar} className={styles.bar}>
+                <span className={styles.header}>Portfolio - Samuel Walls</span>
+                <span className={styles.controls}>
+                    <Minimize onClick={() => setMinimized(!minimized)} />
+                    <Expand onClick={() => setMaximized(!maximized)} />
+                    <Close onClick={() => setOpened(false)} />
+                </span>
+            </div>
 
-        <div className={styles.body}>
-            <div className={styles.content}>
-                <Welcome />
-                <TerminalLine user="root" directory={window.location.pathname} reference={typingElement}>Welcome to my website!</TerminalLine>
-                <TerminalInput user="root" directory={window.location.pathname} onSubmit={console.log}/>
-                {/* <ascii-img src="../images/day 3.webp" width="1920" height="1080" scale=".25" color="#ffffff" alt="Cinematic picture of a field of dandylions against a snow-capped mountain range."></ascii-img> */}
+            <div className={styles.body}>
+                <div className={styles.content}>
+                    <Welcome />
+                    <TerminalLine user="root" directory={window.location.pathname} reference={typingElement}>Welcome to my website!</TerminalLine>
+                    <TerminalInput user="root" directory={window.location.pathname} onSubmit={console.log}/>
+                    {/* <ascii-img src="../images/day 3.webp" width="1920" height="1080" scale=".25" color="#ffffff" alt="Cinematic picture of a field of dandylions against a snow-capped mountain range."></ascii-img> */}
+                </div>
             </div>
         </div>
     </div>
