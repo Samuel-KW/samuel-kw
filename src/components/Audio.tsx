@@ -32,7 +32,7 @@ export default function AudioButton () {
               onClick={() => setMuted(!muted)}>
 
             <svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="0 0 75 75"
-                stroke="#fff" fill="#fff" strokeWidth="5">
+                stroke="#fff" fill="#fff" strokeWidth="5" opacity={ muted ? 0.3 : 0.6 }>
 
                 <path d="m39,14-17,15H6V48H22l17,15z" strokeLinejoin="round"/>
 
