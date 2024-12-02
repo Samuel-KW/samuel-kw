@@ -21,21 +21,24 @@ export const sound = {
     disabled: wrapper([,,368,.01,.01,.02,,1.1,-20,-6,-206,.47,,,,,,.89,.03])
 }
 
-export default function Audio () {
+export default function AudioButton () {
 
     const [muted, setMuted] = useState(config.muted || !config.interaction);
 
     config.muted = muted;
 
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.0"
-            viewBox="0 0 75 75" width="128" height="128"
-            stroke="#fff" fill="#fff" stroke-width="5"
-            onClick={() => setMuted(!muted)}>
+        <div style={{cursor: "pointer", width: "32px", height: "32px", position: "fixed", right: "10px", top: "10px"}} 
+              onClick={() => setMuted(!muted)}>
 
-            <path d="m39,14-17,15H6V48H22l17,15z" stroke-linejoin="round"/>
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="0 0 75 75"
+                stroke="#fff" fill="#fff" strokeWidth="5">
 
-            <path id="muted" display={ muted ? "block" : "none" } d="m49,26 20,24m0-24-20,24" fill="none" stroke-linecap="round"/>
-        </svg>
+                <path d="m39,14-17,15H6V48H22l17,15z" strokeLinejoin="round"/>
+
+                <path id="muted" display={ muted ? "block" : "none" } d="m49,26 20,24m0-24-20,24" fill="none" strokeLinecap="round"/>
+            </svg>
+        </div>
+        
     );
 }

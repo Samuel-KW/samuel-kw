@@ -1,5 +1,6 @@
 import Background from "./Background";
 import Terminal from "./console/Terminal";
+import AudioButton from "./Audio";
 
 import "./utils/DynamicTitle";
 
@@ -9,6 +10,7 @@ export default function App() {
     return (
         <>
 
+            <AudioButton />
 
             <div id="content" style={{height: "100%"}} className="center">
                 <Terminal />
