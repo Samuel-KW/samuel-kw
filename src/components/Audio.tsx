@@ -1,6 +1,6 @@
 import { zzfx } from "./utils/ZzFX";
 import config from "../config";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function wrapper (data: (number | undefined)[]) {
     return () => {
