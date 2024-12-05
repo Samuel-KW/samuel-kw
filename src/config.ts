@@ -2,7 +2,9 @@ let config = {
     muted: true,
     volume: 1,
     interaction: false
-}
+};
+
+if (localStorage.getItem("muted")) config.muted = localStorage.getItem("muted") === "true";
 
 const listenForInteraction = () => {
     config.interaction = true;

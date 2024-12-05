@@ -1,11 +1,11 @@
 import { zzfx } from "./utils/ZzFX";
 import config from "../config";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function wrapper (data: (number | undefined)[]) {
     return () => {
         
-        if (config.muted) return;
+        if (config.muted || !config.interaction) return;
 
         zzfx(...data);
     };
@@ -23,13 +23,16 @@ export const sound = {
 
 export default function AudioButton () {
 
-    const [muted, setMuted] = useState(config.muted || !config.interaction);
+    const [muted, setMuted] = useState(config.muted);
 
-    config.muted = muted;
+    const toggle = () => {
+        setMuted(!muted);
+        localStorage.setItem("muted", String(!muted));
+    };
 
     return (
         <div style={{cursor: "pointer", width: "32px", height: "32px", position: "fixed", right: "10px", top: "10px"}} 
-              onClick={() => setMuted(!muted)}>
+              onClick={() => toggle()}>
 
             <svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="0 0 75 75"
                 stroke="#fff" fill="#fff" strokeWidth="5" opacity={ muted ? 0.3 : 0.6 }>
